@@ -200,6 +200,20 @@
             </span>
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -225,6 +239,8 @@
     
     
     
+
+  
       <footer class="post-footer">
         <div class="post-eof"></div>
       </footer>
@@ -281,6 +297,20 @@
             </span>
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -306,6 +336,8 @@
     
     
     
+
+  
       <footer class="post-footer">
         <div class="post-eof"></div>
       </footer>
@@ -445,6 +477,9 @@
   <span class="author" itemprop="copyrightHolder">Train</span>
 </div>
 
+
+
+
         
 
 
@@ -497,6 +532,35 @@
   
 
   
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '1LXROcO8F81vNzCtKYvU63uw-gzGzoHsz',
+      appKey     : 'phyviRrPlFLTolnYowgPrLSO',
+      placeholder: "说点什么吧",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
