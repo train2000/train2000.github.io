@@ -60,6 +60,20 @@
       </tags>
   </entry>
   <entry>
+    <title>nginx服务器配置ssl</title>
+    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
+    <content><![CDATA[<p>这里暂时只直接讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
+<span id="more"></span>
+<h3 id="把获取到的两个文件-pem和-key-拷贝到服务器上"><a href="#把获取到的两个文件-pem和-key-拷贝到服务器上" class="headerlink" title="把获取到的两个文件(.pem和.key)拷贝到服务器上"></a>把获取到的两个文件(.pem和.key)拷贝到服务器上</h3><h3 id="找到nginx配置文件nginx-conf-不同主机可能路径不一致-我的是在-etc-nginx下"><a href="#找到nginx配置文件nginx-conf-不同主机可能路径不一致-我的是在-etc-nginx下" class="headerlink" title="找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下"></a>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</h3>]]></content>
+      <categories>
+        <category>服务器配置</category>
+      </categories>
+      <tags>
+        <tag>ssl</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>青龙面板+xdd-plus小白教程</title>
     <url>/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="1-安装宝塔"><a href="#1-安装宝塔" class="headerlink" title="1.安装宝塔"></a>1.安装宝塔</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>

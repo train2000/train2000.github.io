@@ -1188,6 +1188,12 @@ pre .javascript .function {
   padding: 2px;
   border-radius: 50%;
 }
+.site-author-image {
+  transition: transform 1s ease-out;
+}
+.site-author-image:hover {
+  transform: rotateZ(360deg);
+}
 .site-author-name {
   color: var(--text-color);
   font-weight: 600;
@@ -1214,7 +1220,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #5eff9f;
+  background: #8aa1e7;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2746,4 +2752,8 @@ body {
 *::-moz-selection {
   background: #2e7ca0;
   color: #fff;
+}
+隐藏 valine 的 powered by,
+.vpower.txt-right {
+  display: none;
 }
