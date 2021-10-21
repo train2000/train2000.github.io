@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>nginx服务器配置ssl</title>
+    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
+    <content><![CDATA[<p>这里暂时只直接讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
+<span id="more"></span>
+<h3 id="把获取到的两个文件-pem和-key-拷贝到服务器上"><a href="#把获取到的两个文件-pem和-key-拷贝到服务器上" class="headerlink" title="把获取到的两个文件(.pem和.key)拷贝到服务器上"></a>把获取到的两个文件(.pem和.key)拷贝到服务器上</h3><h3 id="找到nginx配置文件nginx-conf-不同主机可能路径不一致-我的是在-etc-nginx下"><a href="#找到nginx配置文件nginx-conf-不同主机可能路径不一致-我的是在-etc-nginx下" class="headerlink" title="找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下"></a>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</h3>]]></content>
+      <categories>
+        <category>服务器配置</category>
+      </categories>
+      <tags>
+        <tag>ssl</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>xdd相关依赖安装</title>
     <url>/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h1 id="node-js-及xdd-相关依赖安装"><a href="#node-js-及xdd-相关依赖安装" class="headerlink" title="node.js 及xdd 相关依赖安装"></a>node.js 及xdd 相关依赖安装</h1><h2 id="1-下载node压缩包-同样安装在usr-local目录"><a href="#1-下载node压缩包-同样安装在usr-local目录" class="headerlink" title="1.下载node压缩包 同样安装在usr/local目录"></a>1.下载node压缩包 同样安装在usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>  &amp;&amp; wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
@@ -57,20 +71,6 @@
       </categories>
       <tags>
         <tag>xdd-plus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx服务器配置ssl</title>
-    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
-    <content><![CDATA[<p>这里暂时只直接讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
-<span id="more"></span>
-<h3 id="把获取到的两个文件-pem和-key-拷贝到服务器上"><a href="#把获取到的两个文件-pem和-key-拷贝到服务器上" class="headerlink" title="把获取到的两个文件(.pem和.key)拷贝到服务器上"></a>把获取到的两个文件(.pem和.key)拷贝到服务器上</h3><h3 id="找到nginx配置文件nginx-conf-不同主机可能路径不一致-我的是在-etc-nginx下"><a href="#找到nginx配置文件nginx-conf-不同主机可能路径不一致-我的是在-etc-nginx下" class="headerlink" title="找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下"></a>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</h3>]]></content>
-      <categories>
-        <category>服务器配置</category>
-      </categories>
-      <tags>
-        <tag>ssl</tag>
-        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
