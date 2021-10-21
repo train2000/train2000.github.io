@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2021/10/21/%E8%BD%AF%E8%80%83%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E8%80%83%E8%AF%95%E5%86%85%E5%AE%B9%E5%8F%8A%E5%A4%87%E6%88%98%E6%94%BB%E7%95%A5/</loc>
+    
+    <lastmod>2021-10-21</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</loc>
     
     <lastmod>2021-10-21</lastmod>
@@ -102,6 +109,13 @@
   </url>
   
   <url>
+    <loc>http://example.com/tags/%E8%BD%AF%E8%80%83/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/tags/%E9%9D%92%E9%BE%99/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
@@ -119,6 +133,13 @@
   
   <url>
     <loc>http://example.com/categories/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E8%BD%AF%E8%80%83/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

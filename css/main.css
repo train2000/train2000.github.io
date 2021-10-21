@@ -1220,7 +1220,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffa24e;
+  background: #368799;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2757,6 +2757,7 @@ body {
 .vpower.txt-right {
   display: none;
 }
-#disclaimers {
+#disclaimers,
+#post_indent {
   text-indent: 2em;
 }
