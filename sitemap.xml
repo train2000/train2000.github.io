@@ -58,14 +58,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/lib/three/package.json</loc>
+    <loc>http://example.com/lib/three/renovate.json</loc>
     
     <lastmod>2021-10-16</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/lib/three/renovate.json</loc>
+    <loc>http://example.com/lib/three/package.json</loc>
     
     <lastmod>2021-10-16</lastmod>
     
@@ -102,13 +102,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/xdd-plus/</loc>
-    <lastmod>2021-10-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/%E8%BD%AF%E8%80%83/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
@@ -117,6 +110,13 @@
   
   <url>
     <loc>http://example.com/tags/%E9%9D%92%E9%BE%99/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/xdd-plus/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -132,14 +132,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF/</loc>
+    <loc>http://example.com/categories/%E8%BD%AF%E8%80%83/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E8%BD%AF%E8%80%83/</loc>
+    <loc>http://example.com/categories/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

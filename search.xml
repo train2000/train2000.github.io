@@ -32,65 +32,6 @@
       </tags>
   </entry>
   <entry>
-    <title>xdd相关依赖安装</title>
-    <url>/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h1 id="node-js-及xdd-相关依赖安装"><a href="#node-js-及xdd-相关依赖安装" class="headerlink" title="node.js 及xdd 相关依赖安装"></a>node.js 及xdd 相关依赖安装</h1><h2 id="1-下载node压缩包-同样安装在usr-local目录"><a href="#1-下载node压缩包-同样安装在usr-local目录" class="headerlink" title="1.下载node压缩包 同样安装在usr/local目录"></a>1.下载node压缩包 同样安装在usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>  &amp;&amp; wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-
-<h2 id="2-解压node压缩包"><a href="#2-解压node压缩包" class="headerlink" title="2.解压node压缩包"></a>2.解压node压缩包</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xz -dk node-v14.17.5-linux-x64.tar.xz  &amp;&amp; tar -xvf node-v14.17.5-linux-x64.tar</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-node-js环境配置"><a href="#3-node-js环境配置" class="headerlink" title="3.node.js环境配置"></a>3.node.js环境配置</h2><h3 id="1-进入配置文件"><a href="#1-进入配置文件" class="headerlink" title="(1).进入配置文件"></a>(1).进入配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-按键-i-进入插入编辑模式，在文件的最后面新行添加以下三行代码："><a href="#2-按键-i-进入插入编辑模式，在文件的最后面新行添加以下三行代码：" class="headerlink" title="(2).按键 i 进入插入编辑模式，在文件的最后面新行添加以下三行代码："></a>(2).按键 i 进入插入编辑模式，在文件的最后面新行添加以下三行代码：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_HOME=/usr/<span class="built_in">local</span>/node-v14.17.5-linux-x64</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$NODE_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-编辑完成后按键盘上的ESC键-输入-wq-保存退出输入"><a href="#3-编辑完成后按键盘上的ESC键-输入-wq-保存退出输入" class="headerlink" title="(3)编辑完成后按键盘上的ESC键,输入:wq 保存退出输入"></a>(3)编辑完成后按键盘上的ESC键,输入:wq 保存退出输入</h3><h3 id="4-生效配置文件"><a href="#4-生效配置文件" class="headerlink" title="(4)生效配置文件"></a>(4)生效配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-检查是否安装成功"><a href="#4-检查是否安装成功" class="headerlink" title="4.检查是否安装成功"></a>4.检查是否安装成功</h2><p>查看node版本 node -v<br>查询结果 V14.17.5<br>查看nmp版本 npm -v<br>查询结果 V6.14.xx</p>
-<p>然后通过npm安装got、tough-cookie、crypto-js依赖 挨个跑 不要回root下，回去的话②和③记得 cd xdd/scripts目录<br>plus版把所有命令里的cd xdd 改为cd xdd-plus 即可<br>①.安装got</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xdd-plus  &amp;&amp;  npm install got</span><br></pre></td></tr></table></figure>
-
-<p>②.安装tough-cookie</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> scripts &amp;&amp; npm install png-js crypto-js download got http-server request tough-cookie tunnel ws</span><br></pre></td></tr></table></figure>
-
-<p>③.安装crypto-js</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install crypto-js</span><br></pre></td></tr></table></figure>
-
-<p>最后说一下 这个版本资产查询 需要在xdd/scripts目录下放Faker仓库的jd_bean_change_new.js<br>拉去命令如下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xdd-plus/scripts  &amp;&amp; wget https://cdn.jsdelivr.net/gh/muzikeji/mzkj@master/20210908/jd_bean_change_new.js</span><br></pre></td></tr></table></figure>
-
-<p>wskey自动转换文件拉去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> &amp;&amp;  <span class="built_in">cd</span> xdd-plus/scripts &amp;&amp; wget https://cdn.jsdelivr.net/gh/muzikeji/mzkj@master/20210908/wspt.py</span><br></pre></td></tr></table></figure>
-
-<p>新增 wskey自动更新ptkey功能 需要用户提供wskey 添加后台<br>同时需要安装pip</p>
-<h1 id="Python-pip-安装"><a href="#Python-pip-安装" class="headerlink" title="Python pip 安装"></a>Python pip 安装</h1><p>pip 是 Python 包管理工具，该工具提供了对Python 包的查找、下载、安装、卸载的功能。<br>目前如果你在 python.org 下载最新版本的安装包，则是已经自带了该工具。<br>pip 官网：<a href="https://pypi.org/project/pip/">https://pypi.org/project/pip/</a><br>你可以通过以下命令来判断是否已安装：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip --version     <span class="comment"># Python2.x 版本命令</span></span><br><span class="line">pip3 --version    <span class="comment"># Python3.x 版本命令</span></span><br></pre></td></tr></table></figure>
-
-<p>如果你还未安装，则可以使用以下方法来安装：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py   <span class="comment"># 下载安装脚本</span></span><br><span class="line"> sudo python get-pip.py    <span class="comment"># 2.x运行安装脚本</span></span><br><span class="line"> sudo python3 get-pip.py    <span class="comment"># 3.x运行安装脚本。</span></span><br></pre></td></tr></table></figure>
-
-<p>centos使用下面命令pip</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum -y install python-pip</span><br></pre></td></tr></table></figure>
-
-<p>一般情况 pip 对应的是 Python 2.7，pip3 对应的是 Python 3.x。注意：用哪个版本的 Python 运行安装脚本，pip 就被关联到哪个版本<br>部分 Linux 发行版可直接用包管理器安装 pip，如 Debian 和 Ubuntu：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>青龙面板</category>
-      </categories>
-      <tags>
-        <tag>xdd-plus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>软考软件设计师考试内容及备战攻略</title>
     <url>/2021/10/21/%E8%BD%AF%E8%80%83%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E8%80%83%E8%AF%95%E5%86%85%E5%AE%B9%E5%8F%8A%E5%A4%87%E6%88%98%E6%94%BB%E7%95%A5/</url>
     <content><![CDATA[<h4 id="软考简介："><a href="#软考简介：" class="headerlink" title="软考简介："></a>软考简介：</h4><p id="post_indent">软考全称软件专业技术资格（水平）考试<span id="more"></span>，是由国家人力资源和社会保障部（原人事部）、工业和信息化部（原信息产业部）领导的国家级考试，其目的是，科学、公正地对全国计算机与软件专业技术人员进行职业资格、专业技术资格认定和专业技术水平测试。
@@ -186,8 +127,67 @@
         <category>青龙面板</category>
       </categories>
       <tags>
-        <tag>xdd-plus</tag>
         <tag>青龙</tag>
+        <tag>xdd-plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xdd相关依赖安装</title>
+    <url>/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h1 id="node-js-及xdd-相关依赖安装"><a href="#node-js-及xdd-相关依赖安装" class="headerlink" title="node.js 及xdd 相关依赖安装"></a>node.js 及xdd 相关依赖安装</h1><h2 id="1-下载node压缩包-同样安装在usr-local目录"><a href="#1-下载node压缩包-同样安装在usr-local目录" class="headerlink" title="1.下载node压缩包 同样安装在usr/local目录"></a>1.下载node压缩包 同样安装在usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>  &amp;&amp; wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+
+<h2 id="2-解压node压缩包"><a href="#2-解压node压缩包" class="headerlink" title="2.解压node压缩包"></a>2.解压node压缩包</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xz -dk node-v14.17.5-linux-x64.tar.xz  &amp;&amp; tar -xvf node-v14.17.5-linux-x64.tar</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-node-js环境配置"><a href="#3-node-js环境配置" class="headerlink" title="3.node.js环境配置"></a>3.node.js环境配置</h2><h3 id="1-进入配置文件"><a href="#1-进入配置文件" class="headerlink" title="(1).进入配置文件"></a>(1).进入配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-按键-i-进入插入编辑模式，在文件的最后面新行添加以下三行代码："><a href="#2-按键-i-进入插入编辑模式，在文件的最后面新行添加以下三行代码：" class="headerlink" title="(2).按键 i 进入插入编辑模式，在文件的最后面新行添加以下三行代码："></a>(2).按键 i 进入插入编辑模式，在文件的最后面新行添加以下三行代码：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_HOME=/usr/<span class="built_in">local</span>/node-v14.17.5-linux-x64</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$NODE_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-编辑完成后按键盘上的ESC键-输入-wq-保存退出输入"><a href="#3-编辑完成后按键盘上的ESC键-输入-wq-保存退出输入" class="headerlink" title="(3)编辑完成后按键盘上的ESC键,输入:wq 保存退出输入"></a>(3)编辑完成后按键盘上的ESC键,输入:wq 保存退出输入</h3><h3 id="4-生效配置文件"><a href="#4-生效配置文件" class="headerlink" title="(4)生效配置文件"></a>(4)生效配置文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-检查是否安装成功"><a href="#4-检查是否安装成功" class="headerlink" title="4.检查是否安装成功"></a>4.检查是否安装成功</h2><p>查看node版本 node -v<br>查询结果 V14.17.5<br>查看nmp版本 npm -v<br>查询结果 V6.14.xx</p>
+<p>然后通过npm安装got、tough-cookie、crypto-js依赖 挨个跑 不要回root下，回去的话②和③记得 cd xdd/scripts目录<br>plus版把所有命令里的cd xdd 改为cd xdd-plus 即可<br>①.安装got</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xdd-plus  &amp;&amp;  npm install got</span><br></pre></td></tr></table></figure>
+
+<p>②.安装tough-cookie</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> scripts &amp;&amp; npm install png-js crypto-js download got http-server request tough-cookie tunnel ws</span><br></pre></td></tr></table></figure>
+
+<p>③.安装crypto-js</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install crypto-js</span><br></pre></td></tr></table></figure>
+
+<p>最后说一下 这个版本资产查询 需要在xdd/scripts目录下放Faker仓库的jd_bean_change_new.js<br>拉去命令如下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xdd-plus/scripts  &amp;&amp; wget https://cdn.jsdelivr.net/gh/muzikeji/mzkj@master/20210908/jd_bean_change_new.js</span><br></pre></td></tr></table></figure>
+
+<p>wskey自动转换文件拉去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> &amp;&amp;  <span class="built_in">cd</span> xdd-plus/scripts &amp;&amp; wget https://cdn.jsdelivr.net/gh/muzikeji/mzkj@master/20210908/wspt.py</span><br></pre></td></tr></table></figure>
+
+<p>新增 wskey自动更新ptkey功能 需要用户提供wskey 添加后台<br>同时需要安装pip</p>
+<h1 id="Python-pip-安装"><a href="#Python-pip-安装" class="headerlink" title="Python pip 安装"></a>Python pip 安装</h1><p>pip 是 Python 包管理工具，该工具提供了对Python 包的查找、下载、安装、卸载的功能。<br>目前如果你在 python.org 下载最新版本的安装包，则是已经自带了该工具。<br>pip 官网：<a href="https://pypi.org/project/pip/">https://pypi.org/project/pip/</a><br>你可以通过以下命令来判断是否已安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip --version     <span class="comment"># Python2.x 版本命令</span></span><br><span class="line">pip3 --version    <span class="comment"># Python3.x 版本命令</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你还未安装，则可以使用以下方法来安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py   <span class="comment"># 下载安装脚本</span></span><br><span class="line"> sudo python get-pip.py    <span class="comment"># 2.x运行安装脚本</span></span><br><span class="line"> sudo python3 get-pip.py    <span class="comment"># 3.x运行安装脚本。</span></span><br></pre></td></tr></table></figure>
+
+<p>centos使用下面命令pip</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum -y install python-pip</span><br></pre></td></tr></table></figure>
+
+<p>一般情况 pip 对应的是 Python 2.7，pip3 对应的是 Python 3.x。注意：用哪个版本的 Python 运行安装脚本，pip 就被关联到哪个版本<br>部分 Linux 发行版可直接用包管理器安装 pip，如 Debian 和 Ubuntu：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>青龙面板</category>
+      </categories>
+      <tags>
+        <tag>xdd-plus</tag>
       </tags>
   </entry>
 </search>
