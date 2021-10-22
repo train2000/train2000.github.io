@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>nginx服务器配置ssl</title>
-    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
-    <content><![CDATA[<p>这里暂只讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
-<span id="more"></span>
-
-<h3 id="拷贝证书文件"><a href="#拷贝证书文件" class="headerlink" title="拷贝证书文件"></a>拷贝证书文件</h3><p>将获取到的两个文件(.pem和.key)拷贝到服务器上<br>建议在网站根目录新建一个名为cert的目录来存放证书文件</p>
-<h3 id="更改nginx配置文件"><a href="#更改nginx配置文件" class="headerlink" title="更改nginx配置文件"></a>更改nginx配置文件</h3><p>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
-<p>在http{ }里面添加如下内容（有的文件里有此内容，默认是注释掉的，根据需要取消注释）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       443 ssl http2;</span><br><span class="line">       listen       [::]:443 ssl http2;</span><br><span class="line">       server_name  www.xxxxxx.xxx;  <span class="comment">#证书绑定的域名</span></span><br><span class="line">       root         xxxxxxxx;   <span class="comment">#网站根目录路径，根据自己的网站位置进行修改</span></span><br><span class="line"></span><br><span class="line">       ssl_certificate <span class="string">&quot;xxxxx.pem&quot;</span>;    <span class="comment">#这里替换为cert目录里的.pem文件，注意路径的使用</span></span><br><span class="line">       ssl_certificate_key <span class="string">&quot;xxxxxx.key&quot;</span>;  <span class="comment">#这里替换为cert目录里的.key文件，注意路径的使用</span></span><br><span class="line">       ssl_session_cache shared:SSL:1m;</span><br><span class="line">       ssl_session_timeout  10m;</span><br><span class="line">       ssl_ciphers HIGH:!aNULL:!MD5;    <span class="comment">#加密套件类型</span></span><br><span class="line">       ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;     <span class="comment">#TSL协议类型</span></span><br><span class="line">       <span class="comment"># Load configuration files for the default server block.</span></span><br><span class="line">       include /etc/nginx/default.d/*.conf;    <span class="comment">#这里无需修改</span></span><br><span class="line">	<span class="comment"># 以下内容为非必选项</span></span><br><span class="line">       error_page 404 /404.html;</span><br><span class="line">           location = /40x.html &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       error_page 500 502 503 504 /50x.html;</span><br><span class="line">           location = /50x.html &#123;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">#注意大括号一定要一一对应，否则可能会无法启用nginx服务</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="HTTP重定向（可选）"><a href="#HTTP重定向（可选）" class="headerlink" title="HTTP重定向（可选）"></a>HTTP重定向（可选）</h3><p>该设置可以使HTTP请求自动跳转HTTPS<br>在nginx.conf文件里找到</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen     80;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>修改server_name,同上<br>再加入如下内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rewrite ^(.*)$ https://$host<span class="variable">$1</span>; <span class="comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span></span><br></pre></td></tr></table></figure>
-<h3 id="重启nginx服务"><a href="#重启nginx服务" class="headerlink" title="重启nginx服务"></a>重启nginx服务</h3><h4 id="方法1-进入nginx的可执行目录"><a href="#方法1-进入nginx的可执行目录" class="headerlink" title="方法1.进入nginx的可执行目录"></a>方法1.进入nginx的可执行目录</h4><p>通过nginx可执行文件重新加载配置文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin  <span class="comment">#进入Nginx服务的可执行目录。</span></span><br><span class="line">./nginx -s reload  <span class="comment">#重新载入配置文件。</span></span><br></pre></td></tr></table></figure>
-<h4 id="方法2-使用系统重启命令"><a href="#方法2-使用系统重启命令" class="headerlink" title="方法2.使用系统重启命令"></a>方法2.使用系统重启命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
-
-<h3 id="验证是否成功"><a href="#验证是否成功" class="headerlink" title="验证是否成功"></a>验证是否成功</h3><p>在浏览器输 https://你的域名 ，如图位置出现一把锁的图案便大功告成</p>
-<p><img src="/images/success.png" alt="配置成功示例图"></p>
-]]></content>
-      <categories>
-        <category>服务器配置</category>
-      </categories>
-      <tags>
-        <tag>ssl</tag>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>xdd相关依赖安装</title>
     <url>/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h1 id="node-js-及xdd-相关依赖安装"><a href="#node-js-及xdd-相关依赖安装" class="headerlink" title="node.js 及xdd 相关依赖安装"></a>node.js 及xdd 相关依赖安装</h1><h2 id="1-下载node压缩包-同样安装在usr-local目录"><a href="#1-下载node压缩包-同样安装在usr-local目录" class="headerlink" title="1.下载node压缩包 同样安装在usr/local目录"></a>1.下载node压缩包 同样安装在usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>  &amp;&amp; wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
@@ -88,6 +57,37 @@
       </categories>
       <tags>
         <tag>xdd-plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginx服务器配置ssl</title>
+    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
+    <content><![CDATA[<p>这里暂只讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
+<span id="more"></span>
+
+<h3 id="拷贝证书文件"><a href="#拷贝证书文件" class="headerlink" title="拷贝证书文件"></a>拷贝证书文件</h3><p>将获取到的两个文件(.pem和.key)拷贝到服务器上<br>建议在网站根目录新建一个名为cert的目录来存放证书文件</p>
+<h3 id="更改nginx配置文件"><a href="#更改nginx配置文件" class="headerlink" title="更改nginx配置文件"></a>更改nginx配置文件</h3><p>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
+<p>在http{ }里面添加如下内容（有的文件里有此内容，默认是注释掉的，根据需要取消注释）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       443 ssl http2;</span><br><span class="line">       listen       [::]:443 ssl http2;</span><br><span class="line">       server_name  www.xxxxxx.xxx;  <span class="comment">#证书绑定的域名</span></span><br><span class="line">       root         xxxxxxxx;   <span class="comment">#网站根目录路径，根据自己的网站位置进行修改</span></span><br><span class="line"></span><br><span class="line">       ssl_certificate <span class="string">&quot;xxxxx.pem&quot;</span>;    <span class="comment">#这里替换为cert目录里的.pem文件，注意路径的使用</span></span><br><span class="line">       ssl_certificate_key <span class="string">&quot;xxxxxx.key&quot;</span>;  <span class="comment">#这里替换为cert目录里的.key文件，注意路径的使用</span></span><br><span class="line">       ssl_session_cache shared:SSL:1m;</span><br><span class="line">       ssl_session_timeout  10m;</span><br><span class="line">       ssl_ciphers HIGH:!aNULL:!MD5;    <span class="comment">#加密套件类型</span></span><br><span class="line">       ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;     <span class="comment">#TSL协议类型</span></span><br><span class="line">       <span class="comment"># Load configuration files for the default server block.</span></span><br><span class="line">       include /etc/nginx/default.d/*.conf;    <span class="comment">#这里无需修改</span></span><br><span class="line">	<span class="comment"># 以下内容为非必选项</span></span><br><span class="line">       error_page 404 /404.html;</span><br><span class="line">           location = /40x.html &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       error_page 500 502 503 504 /50x.html;</span><br><span class="line">           location = /50x.html &#123;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">#注意大括号一定要一一对应，否则可能会无法启用nginx服务</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP重定向（可选）"><a href="#HTTP重定向（可选）" class="headerlink" title="HTTP重定向（可选）"></a>HTTP重定向（可选）</h3><p>该设置可以使HTTP请求自动跳转HTTPS<br>在nginx.conf文件里找到</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen     80;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改server_name,同上<br>再加入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rewrite ^(.*)$ https://$host<span class="variable">$1</span>; <span class="comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span></span><br></pre></td></tr></table></figure>
+<h3 id="重启nginx服务"><a href="#重启nginx服务" class="headerlink" title="重启nginx服务"></a>重启nginx服务</h3><h4 id="方法1-进入nginx的可执行目录"><a href="#方法1-进入nginx的可执行目录" class="headerlink" title="方法1.进入nginx的可执行目录"></a>方法1.进入nginx的可执行目录</h4><p>通过nginx可执行文件重新加载配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin  <span class="comment">#进入Nginx服务的可执行目录。</span></span><br><span class="line">./nginx -s reload  <span class="comment">#重新载入配置文件。</span></span><br></pre></td></tr></table></figure>
+<h4 id="方法2-使用系统重启命令"><a href="#方法2-使用系统重启命令" class="headerlink" title="方法2.使用系统重启命令"></a>方法2.使用系统重启命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证是否成功"><a href="#验证是否成功" class="headerlink" title="验证是否成功"></a>验证是否成功</h3><p>在浏览器输 https://你的域名 ，如图位置出现一把锁的图案便大功告成</p>
+<p><img src="/images/success.png" alt="配置成功示例图"></p>
+]]></content>
+      <categories>
+        <category>服务器配置</category>
+      </categories>
+      <tags>
+        <tag>ssl</tag>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
