@@ -32,31 +32,6 @@
       </tags>
   </entry>
   <entry>
-    <title>软考软件设计师考试内容及备战攻略</title>
-    <url>/2021/10/21/%E8%BD%AF%E8%80%83%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E8%80%83%E8%AF%95%E5%86%85%E5%AE%B9%E5%8F%8A%E5%A4%87%E6%88%98%E6%94%BB%E7%95%A5/</url>
-    <content><![CDATA[<h4 id="软考简介："><a href="#软考简介：" class="headerlink" title="软考简介："></a>软考简介：</h4><p id="post_indent">软考全称软件专业技术资格（水平）考试<span id="more"></span>，是由国家人力资源和社会保障部（原人事部）、工业和信息化部（原信息产业部）领导的国家级考试，其目的是，科学、公正地对全国计算机与软件专业技术人员进行职业资格、专业技术资格认定和专业技术水平测试。
-</p>
-<p>由于本人报考的是软件设计师，因此后续将对软件设计师相关内容进行更新。</p>
-
-<h4 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h4><p id="post_indent">考试分为上午场和下午场，上午场和下午场各75分，总分150分。上午场全是选择题，即75道选择题；下午场由5道大题组成，一般来说上午和下午都达到45分即合格，有时会有差异。</p>
-
-<h4 id="上午考试内容"><a href="#上午考试内容" class="headerlink" title="上午考试内容"></a>上午考试内容</h4><p><img src="/images/test_site1.jpg" alt="上午考试内容"></p>
-<h4 id="下午考试内容"><a href="#下午考试内容" class="headerlink" title="下午考试内容"></a>下午考试内容</h4><p><img src="/images/test_site2.jpg" alt="下午考试内容"></p>
-<h4 id="学习攻略"><a href="#学习攻略" class="headerlink" title="学习攻略"></a>学习攻略</h4><p>1.b站的视频：<a href="https://www.bilibili.com/video/BV1yU4y1371J">https://www.bilibili.com/video/BV1yU4y1371J</a>   ，取得大家的一致好评</p>
-<p>2.软件设计师官方教程，包含了几乎所有的考试内容</p>
-<p>3.软件设计师大纲，包含考点及其相关例题</p>
-<p>4.刷历年真题，这是必须的一步</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p id="post_indent">看视频的时候建议边看边做笔记，以免遗忘，看了视频再去刷对应内容的题，准不会有问题</p>
-
-]]></content>
-      <categories>
-        <category>软考</category>
-      </categories>
-      <tags>
-        <tag>软考</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>xdd相关依赖安装</title>
     <url>/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h1 id="node-js-及xdd-相关依赖安装"><a href="#node-js-及xdd-相关依赖安装" class="headerlink" title="node.js 及xdd 相关依赖安装"></a>node.js 及xdd 相关依赖安装</h1><h2 id="1-下载node压缩包-同样安装在usr-local目录"><a href="#1-下载node压缩包-同样安装在usr-local目录" class="headerlink" title="1.下载node压缩包 同样安装在usr/local目录"></a>1.下载node压缩包 同样安装在usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>  &amp;&amp; wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
@@ -113,6 +88,31 @@
       </categories>
       <tags>
         <tag>xdd-plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软考软件设计师考试内容及备战攻略</title>
+    <url>/2021/10/21/%E8%BD%AF%E8%80%83%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E8%80%83%E8%AF%95%E5%86%85%E5%AE%B9%E5%8F%8A%E5%A4%87%E6%88%98%E6%94%BB%E7%95%A5/</url>
+    <content><![CDATA[<h4 id="软考简介："><a href="#软考简介：" class="headerlink" title="软考简介："></a>软考简介：</h4><p id="post_indent">软考全称软件专业技术资格（水平）考试<span id="more"></span>，是由国家人力资源和社会保障部（原人事部）、工业和信息化部（原信息产业部）领导的国家级考试，其目的是，科学、公正地对全国计算机与软件专业技术人员进行职业资格、专业技术资格认定和专业技术水平测试。
+</p>
+<p>由于本人报考的是软件设计师，因此后续将对软件设计师相关内容进行更新。</p>
+
+<h4 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h4><p id="post_indent">考试分为上午场和下午场，上午场和下午场各75分，总分150分。上午场全是选择题，即75道选择题；下午场由5道大题组成，一般来说上午和下午都达到45分即合格，有时会有差异。</p>
+
+<h4 id="上午考试内容"><a href="#上午考试内容" class="headerlink" title="上午考试内容"></a>上午考试内容</h4><p><img src="/images/test_site1.jpg" alt="上午考试内容"></p>
+<h4 id="下午考试内容"><a href="#下午考试内容" class="headerlink" title="下午考试内容"></a>下午考试内容</h4><p><img src="/images/test_site2.jpg" alt="下午考试内容"></p>
+<h4 id="学习攻略"><a href="#学习攻略" class="headerlink" title="学习攻略"></a>学习攻略</h4><p>1.b站的视频：<a href="https://www.bilibili.com/video/BV1yU4y1371J">https://www.bilibili.com/video/BV1yU4y1371J</a>   ，取得大家的一致好评</p>
+<p>2.软件设计师官方教程，包含了几乎所有的考试内容</p>
+<p>3.软件设计师大纲，包含考点及其相关例题</p>
+<p>4.刷历年真题，这是必须的一步</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p id="post_indent">看视频的时候建议边看边做笔记，以免遗忘，看了视频再去刷对应内容的题，准不会有问题</p>
+
+]]></content>
+      <categories>
+        <category>软考</category>
+      </categories>
+      <tags>
+        <tag>软考</tag>
       </tags>
   </entry>
   <entry>
