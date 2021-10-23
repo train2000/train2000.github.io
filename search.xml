@@ -91,6 +91,34 @@
       </tags>
   </entry>
   <entry>
+    <title>计算机组成原理与体系结构</title>
+    <url>/2021/10/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h3 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h3><h4 id="进制表示"><a href="#进制表示" class="headerlink" title="进制表示"></a>进制表示</h4><p class="indent">R进制转十进制使用按权展开法，其具体操作方式为∶将R进制数的每一位数值用R的k次方形式表示，即幂的底数是R，指数为k ，k与该位和小数点之间的距离有关。当该位位于小数点左边，k值是该位和小数点之间数码的个数,而当该位位于小数点右边，k值是负值，其绝对值是该位和小数点之间数码的个数加1。</p>
+
+<p>例：<br>二进制11010.11 = 1 x 2^4 + 1 x 2^3 + 0 x 2^2 + 1 x 2^1 + 0 x 2^0 + 1 x 2^-1 + 1 x 2^-2=26.75<br>六进制532.13 = 5 x 6^2 + 3 x 6^1 + 2 x 6^0 + 1 x 6^-1 + 3 x 6^-2</p>
+<h4 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h4><h5 id="二进制与八进制"><a href="#二进制与八进制" class="headerlink" title="二进制与八进制"></a>二进制与八进制</h5><p>二进制转八进制：</p>
+<p class="indent">从小数点开始，小数点前从小数点开始向左每三位为一组，最后不足三位的可以添0补足，小数点后向右每三位一组，不足三位必须添0补齐。然后将每组按权相加，即得到八进制数。</p>
+
+<p>八进制转二进制：</p>
+<p class="indent">同上面相似，从小数点开始向左右开始，把每一位数转换成二进制即可。</p>
+
+<h5 id="二进制与十六进制"><a href="#二进制与十六进制" class="headerlink" title="二进制与十六进制"></a>二进制与十六进制</h5><p>二进制转十六进制：</p>
+<p class="indent">与二进制和八进制的转换相似，每四位一组，然后再按权相加。需要注意的是，9之后的数用字母A--F表示，如13应表示为D。（注：末尾为H表示该数是十六进制数）</p>
+
+<p>十六进制转二进制：</p>
+<p class="indent">与八进制转二进制方法相同。</p>
+
+<p>注：八进制与十六进制的转换，需先转为二进制，再转换成八进制或十六进制。</p>
+]]></content>
+      <categories>
+        <category>计算机组成</category>
+      </categories>
+      <tags>
+        <tag>软考</tag>
+        <tag>计算机组成</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>青龙面板+xdd-plus小白教程</title>
     <url>/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="1-安装宝塔"><a href="#1-安装宝塔" class="headerlink" title="1.安装宝塔"></a>1.安装宝塔</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
@@ -163,6 +191,25 @@
       <tags>
         <tag>xdd-plus</tag>
         <tag>青龙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件工程基础</title>
+    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>软件工程</tag>
       </tags>
   </entry>
   <entry>
