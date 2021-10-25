@@ -91,25 +91,6 @@
       </tags>
   </entry>
   <entry>
-    <title>软件工程基础</title>
-    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <tags>
-        <tag>软件工程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>计算机组成原理与体系结构</title>
     <url>/2021/10/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<style>
@@ -117,7 +98,7 @@
         text-indent:2em;
     }
     .unline{text-decoration:underline;}
-    .cankao{
+    .cankao,.span_notice{
     color:red;
     }
 </style>
@@ -169,13 +150,81 @@
 </ol>
 <p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=6">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a><br><br><a href="https://blog.csdn.net/L_gentleman/article/details/93377576">https://blog.csdn.net/L_gentleman/article/details/93377576</a></p>
 <h3 id="flynn分类法"><a href="#flynn分类法" class="headerlink" title="flynn分类法"></a>flynn分类法</h3><p><img src="/images/flynn.jpg" alt="flynn分类法"></p>
-]]></content>
+<h3 id="CISC与RISC"><a href="#CISC与RISC" class="headerlink" title="CISC与RISC"></a>CISC与RISC</h3><p><img src="/images/CISC&RISC.jpg" alt="CISC与RISC"></p>
+<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=8">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
+<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><ol>
+<li><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p class="indent">流水线是指在程序执行时多条指令重叠进行操作的一种准并行处理实现技术。各种部件同时处理是针对不同指令而言的，它们可以同时为多条指令的不同部分进行工作，以提高各部件的利用率和指令的平均执行速度。</p></li>
+</ol>
+<p>指令执行顺序： 取指—&gt;分析—&gt;执行</p>
+<p><img src="/images/lsx_zxqk.jpg"></p>
+<p class="indent">如图所示，在未使用流水线的情况下，需要先完成某一条指令的执行操作后，再进行下一条指令的操作；当使用了流水线后，只要前一条指令的一部分操作已完成，那么就会开始下一条指令的对应操作，从而减少了指令的处理时间。</p>
+
+<ol start="2">
+<li><h4 id="流水线的计算"><a href="#流水线的计算" class="headerlink" title="流水线的计算"></a>流水线的计算</h4></li>
+</ol>
+<p>直接上例题：</p>
+<p class="indent">若指令流水线把一条指令分为取指、分析、执行三部分，且三部分的时间分别为取指2ns、分析2ns、执行1ns。求：流水线的周期是多少？100条指令全部执行完毕的时间是多少？</p>
+
+<p>知识引入：</p>
+<ul>
+<li>流水线周期（▲t ）：执行时间最长的一段</li>
+<li>流水线计算公式：<ol>
+<li>一条指令执行完毕时间+（指令条数-1）* 流水线周期</li>
+<li>理论公式：(t1+t2+t3+…+tk)+(n-1)*▲t  （考的比较多）</li>
+<li>实践公式：(k+n-1)*▲t</li>
+</ol>
+</li>
+<li>k表示把一条指令分为了几部分</li>
+<li>n表示一共有多少条指令</li>
+</ul>
+<p><strong>解答：</strong></p>
+<p class="indent">在本题中，由于三部分时间最长的为取指和分析两部分，它们的时间都为2ns，即<span class="span_notice">流水线周期为2</span>；指令共有三部分，即<span class="span_notice">k为3</span> 。</p>
+使用理论公式计算：(2+2+1)+(100-1)*2=203ns
+
+<p>使用实践公式计算：(3+100-1)*2=204ns</p>
+<ol start="3">
+<li><h4 id="流水线吞吐量计算"><a href="#流水线吞吐量计算" class="headerlink" title="流水线吞吐量计算"></a>流水线吞吐量计算</h4></li>
+</ol>
+<p class="indent">流水线的吞吐率（Though  Put  rate，TP）是指在单位时间内流水线所完成的任务数量或输出的结果数量。公式如下：</p>
+TP=指令条数/流水线执行时间
+
+<p>流水线最大吞吐率： TP(max)=1/▲t </p>
+<p class="indent">以上面的例题为例，其流水线周期为2ns，共有100条指令，执行完所有指令消耗的时间为203ns，那么该流水线的吞吐率为：</p>
+TP = 100/203；
+最大吞吐率为：
+TP(max) = 1 / 2
+
+<ol start="4">
+<li><h4 id="流水线加速比计算"><a href="#流水线加速比计算" class="headerlink" title="流水线加速比计算"></a>流水线加速比计算</h4></li>
+</ol>
+<p>公式：<br>S = 不使用流水线执行时间/使用流水线执行时间</p>
+<p class="indent">前面提到不使用流水线时，需要等当前指令执行结束后再开始执行下一条指令，因此，在这种情况下，执行一条指令所需要的时间为2+2+1=5ns，共有100条指令，故执行完所有指令所需的时间为500ns，而使用流水线的执行时间仅为203ns，所以流水线加速比为：</p>
+S = 500 / 203]]></content>
       <categories>
         <category>计算机组成</category>
       </categories>
       <tags>
         <tag>软考</tag>
         <tag>计算机组成</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件工程基础</title>
+    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>软件工程</tag>
       </tags>
   </entry>
   <entry>
