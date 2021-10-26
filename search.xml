@@ -165,13 +165,13 @@
 <p>直接上例题：</p>
 <p class="indent">若指令流水线把一条指令分为取指、分析、执行三部分，且三部分的时间分别为取指2ns、分析2ns、执行1ns。求：流水线的周期是多少？100条指令全部执行完毕的时间是多少？</p>
 
-<p>知识引入：</p>
+<p><strong>知识引入：</strong></p>
 <ul>
 <li>流水线周期（▲t ）：执行时间最长的一段</li>
 <li>流水线计算公式：<ol>
-<li>一条指令执行完毕时间+（指令条数-1）* 流水线周期</li>
-<li>理论公式：(t1+t2+t3+…+tk)+(n-1)*▲t  （考的比较多）</li>
-<li>实践公式：(k+n-1)*▲t</li>
+<li><span class="span_notice">一条指令执行完毕时间+（指令条数-1）* 流水线周期</span></li>
+<li>理论公式：<span class="span_notice">(t1+t2+t3+…+tk)+(n-1)*▲t</span>  （考的比较多）</li>
+<li>实践公式：<span class="span_notice">(k+n-1)*▲t</span></li>
 </ol>
 </li>
 <li>k表示把一条指令分为了几部分</li>
@@ -225,25 +225,6 @@ S = 500 / 203
       <tags>
         <tag>软考</tag>
         <tag>计算机组成</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件工程基础</title>
-    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <tags>
-        <tag>软件工程</tag>
       </tags>
   </entry>
   <entry>
@@ -319,6 +300,25 @@ S = 500 / 203
       <tags>
         <tag>xdd-plus</tag>
         <tag>青龙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件工程基础</title>
+    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>软件工程</tag>
       </tags>
   </entry>
 </search>
