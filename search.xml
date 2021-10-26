@@ -199,7 +199,26 @@ TP(max) = 1 / 2
 </ol>
 <p>公式：<br>S = 不使用流水线执行时间/使用流水线执行时间</p>
 <p class="indent">前面提到不使用流水线时，需要等当前指令执行结束后再开始执行下一条指令，因此，在这种情况下，执行一条指令所需要的时间为2+2+1=5ns，共有100条指令，故执行完所有指令所需的时间为500ns，而使用流水线的执行时间仅为203ns，所以流水线加速比为：</p>
-S = 500 / 203]]></content>
+S = 500 / 203
+
+
+
+<h3 id="计算机层次化存储结构"><a href="#计算机层次化存储结构" class="headerlink" title="计算机层次化存储结构"></a>计算机层次化存储结构</h3><p>计算机存储结构如图：</p>
+<p><img src="/images/cunchujiegou.jpg"></p>
+<h3 id="cache的基本概念"><a href="#cache的基本概念" class="headerlink" title="cache的基本概念"></a>cache的基本概念</h3><p class="indent">cache的功能：提高CPU数据的I/O速率，突破了冯·诺依曼瓶颈，即CPU与存储系统间数据传送贷款限制。</p>
+在计算机存储体系中，cache是访问速度最快的层次。
+使用cache改善系统性能的依据是程序的局部性原理。
+
+
+<p class="indent">如果以h代表队cache的访问命中率，t1表示cache的周期时间，t2表示煮存储器周期时间，以读操作为例，使用<span class="span_notice">cache+主存储器</span>的系统的平均周期为t3，则：
+</p>
+
+<pre><code>t3 = h * t1 + (1-h) * t2
+</code></pre>
+<p>其中，(1-h) 又称为失效率（未命中率）。</p>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h4 id="磁盘结构与参数"><a href="#磁盘结构与参数" class="headerlink" title="磁盘结构与参数"></a>磁盘结构与参数</h4><p><img src="/images/disk.jpg"></p>
+<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=17">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
+]]></content>
       <categories>
         <category>计算机组成</category>
       </categories>
@@ -225,31 +244,6 @@ S = 500 / 203]]></content>
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
       <tags>
         <tag>软件工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软考软件设计师考试内容及备战攻略</title>
-    <url>/2021/10/21/%E8%BD%AF%E8%80%83%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E8%80%83%E8%AF%95%E5%86%85%E5%AE%B9%E5%8F%8A%E5%A4%87%E6%88%98%E6%94%BB%E7%95%A5/</url>
-    <content><![CDATA[<h4 id="软考简介："><a href="#软考简介：" class="headerlink" title="软考简介："></a>软考简介：</h4><p id="post_indent">软考全称软件专业技术资格（水平）考试<span id="more"></span>，是由国家人力资源和社会保障部（原人事部）、工业和信息化部（原信息产业部）领导的国家级考试，其目的是，科学、公正地对全国计算机与软件专业技术人员进行职业资格、专业技术资格认定和专业技术水平测试。
-</p>
-<p>由于本人报考的是软件设计师，因此后续将对软件设计师相关内容进行更新。</p>
-
-<h4 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h4><p id="post_indent">考试分为上午场和下午场，上午场和下午场各75分，总分150分。上午场全是选择题，即75道选择题；下午场由5道大题组成，一般来说上午和下午都达到45分即合格，有时会有差异。</p>
-
-<h4 id="上午考试内容"><a href="#上午考试内容" class="headerlink" title="上午考试内容"></a>上午考试内容</h4><p><img src="/images/test_site1.jpg" alt="上午考试内容"></p>
-<h4 id="下午考试内容"><a href="#下午考试内容" class="headerlink" title="下午考试内容"></a>下午考试内容</h4><p><img src="/images/test_site2.jpg" alt="下午考试内容"></p>
-<h4 id="学习攻略"><a href="#学习攻略" class="headerlink" title="学习攻略"></a>学习攻略</h4><p>1.b站的视频：<a href="https://www.bilibili.com/video/BV1yU4y1371J">https://www.bilibili.com/video/BV1yU4y1371J</a>   ，取得大家的一致好评</p>
-<p>2.软件设计师官方教程，包含了几乎所有的考试内容</p>
-<p>3.软件设计师大纲，包含考点及其相关例题</p>
-<p>4.刷历年真题，这是必须的一步</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p id="post_indent">看视频的时候建议边看边做笔记，以免遗忘，看了视频再去刷对应内容的题，准不会有问题</p>
-
-]]></content>
-      <categories>
-        <category>软考</category>
-      </categories>
-      <tags>
-        <tag>软考</tag>
       </tags>
   </entry>
   <entry>

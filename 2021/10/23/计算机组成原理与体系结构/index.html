@@ -33,8 +33,10 @@
 <meta property="og:image" content="https://www.train2000.top/images/flynn.jpg">
 <meta property="og:image" content="https://www.train2000.top/images/CISC&RISC.jpg">
 <meta property="og:image" content="https://www.train2000.top/images/lsx_zxqk.jpg">
+<meta property="og:image" content="https://www.train2000.top/images/cunchujiegou.jpg">
+<meta property="og:image" content="https://www.train2000.top/images/disk.jpg">
 <meta property="article:published_time" content="2021-10-23T06:35:44.000Z">
-<meta property="article:modified_time" content="2021-10-25T10:07:46.986Z">
+<meta property="article:modified_time" content="2021-10-26T11:13:41.298Z">
 <meta property="article:author" content="Train">
 <meta property="article:tag" content="软考">
 <meta property="article:tag" content="计算机组成">
@@ -232,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-25 18:07:46" itemprop="dateModified" datetime="2021-10-25T18:07:46+08:00">2021-10-25</time>
+                <time title="修改时间：2021-10-26 19:13:41" itemprop="dateModified" datetime="2021-10-26T19:13:41+08:00">2021-10-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -385,6 +387,25 @@ TP(max) = 1 / 2
 <p>公式：<br>S = 不使用流水线执行时间/使用流水线执行时间</p>
 <p class="indent">前面提到不使用流水线时，需要等当前指令执行结束后再开始执行下一条指令，因此，在这种情况下，执行一条指令所需要的时间为2+2+1=5ns，共有100条指令，故执行完所有指令所需的时间为500ns，而使用流水线的执行时间仅为203ns，所以流水线加速比为：</p>
 S = 500 / 203
+
+
+
+<h3 id="计算机层次化存储结构"><a href="#计算机层次化存储结构" class="headerlink" title="计算机层次化存储结构"></a>计算机层次化存储结构</h3><p>计算机存储结构如图：</p>
+<p><img src="/images/cunchujiegou.jpg"></p>
+<h3 id="cache的基本概念"><a href="#cache的基本概念" class="headerlink" title="cache的基本概念"></a>cache的基本概念</h3><p class="indent">cache的功能：提高CPU数据的I/O速率，突破了冯·诺依曼瓶颈，即CPU与存储系统间数据传送贷款限制。</p>
+在计算机存储体系中，cache是访问速度最快的层次。
+使用cache改善系统性能的依据是程序的局部性原理。
+
+
+<p class="indent">如果以h代表队cache的访问命中率，t1表示cache的周期时间，t2表示煮存储器周期时间，以读操作为例，使用<span class="span_notice">cache+主存储器</span>的系统的平均周期为t3，则：
+</p>
+
+<pre><code>t3 = h * t1 + (1-h) * t2
+</code></pre>
+<p>其中，(1-h) 又称为失效率（未命中率）。</p>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h4 id="磁盘结构与参数"><a href="#磁盘结构与参数" class="headerlink" title="磁盘结构与参数"></a>磁盘结构与参数</h4><p><img src="/images/disk.jpg"></p>
+<p><span class="cankao">参考：</span><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yU4y1371J?p=17">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
+
     </div>
 
     
@@ -486,7 +507,7 @@ S = 500 / 203
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">数据的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.</span> <span class="nav-text">进制表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">进制转换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%8E%E5%85%AB%E8%BF%9B%E5%88%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">二进制与八进制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%8E%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">二进制与十六进制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%ACR%E8%BF%9B%E5%88%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">十进制转R进制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%A7%BB%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">源码反码补码移码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">计算机结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flynn%E5%88%86%E7%B1%BB%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">flynn分类法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CISC%E4%B8%8ERISC"><span class="nav-number">4.</span> <span class="nav-text">CISC与RISC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="nav-number">5.</span> <span class="nav-text">流水线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">5.2.</span> <span class="nav-text">流水线的计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%90%9E%E5%90%90%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="nav-number">5.3.</span> <span class="nav-text">流水线吞吐量计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%8A%A0%E9%80%9F%E6%AF%94%E8%AE%A1%E7%AE%97"><span class="nav-number">5.4.</span> <span class="nav-text">流水线加速比计算</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">数据的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.</span> <span class="nav-text">进制表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">进制转换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%8E%E5%85%AB%E8%BF%9B%E5%88%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">二进制与八进制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%8E%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">二进制与十六进制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%ACR%E8%BF%9B%E5%88%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">十进制转R进制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%A7%BB%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">源码反码补码移码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">计算机结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flynn%E5%88%86%E7%B1%BB%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">flynn分类法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CISC%E4%B8%8ERISC"><span class="nav-number">4.</span> <span class="nav-text">CISC与RISC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="nav-number">5.</span> <span class="nav-text">流水线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">5.2.</span> <span class="nav-text">流水线的计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%90%9E%E5%90%90%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="nav-number">5.3.</span> <span class="nav-text">流水线吞吐量计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%8A%A0%E9%80%9F%E6%AF%94%E8%AE%A1%E7%AE%97"><span class="nav-number">5.4.</span> <span class="nav-text">流水线加速比计算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B1%82%E6%AC%A1%E5%8C%96%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">6.</span> <span class="nav-text">计算机层次化存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">7.</span> <span class="nav-text">cache的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98"><span class="nav-number">8.</span> <span class="nav-text">磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%BB%93%E6%9E%84%E4%B8%8E%E5%8F%82%E6%95%B0"><span class="nav-number">8.1.</span> <span class="nav-text">磁盘结构与参数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -502,14 +523,14 @@ S = 500 / 203
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -533,9 +554,6 @@ S = 500 / 203
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="2021&#x2F;10&#x2F;23&#x2F;软件工程基础&#x2F;">软件工程基础</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2021/10/21/%E8%BD%AF%E8%80%83%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E8%80%83%E8%AF%95%E5%86%85%E5%AE%B9%E5%8F%8A%E5%A4%87%E6%88%98%E6%94%BB%E7%95%A5/" title="2021&#x2F;10&#x2F;21&#x2F;软考软件设计师考试内容及备战攻略&#x2F;">软考软件设计师考试内容及备战攻略</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/" title="2021&#x2F;10&#x2F;20&#x2F;nginx服务器配置ssl&#x2F;">nginx服务器配置ssl</a>
