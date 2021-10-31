@@ -228,6 +228,25 @@ S = 500 / 203
       </tags>
   </entry>
   <entry>
+    <title>软件工程基础</title>
+    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>软件工程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>青龙面板+xdd-plus小白教程</title>
     <url>/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="1-安装宝塔"><a href="#1-安装宝塔" class="headerlink" title="1.安装宝塔"></a>1.安装宝塔</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
@@ -300,25 +319,6 @@ S = 500 / 203
       <tags>
         <tag>xdd-plus</tag>
         <tag>青龙</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件工程基础</title>
-    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <tags>
-        <tag>软件工程</tag>
       </tags>
   </entry>
 </search>
