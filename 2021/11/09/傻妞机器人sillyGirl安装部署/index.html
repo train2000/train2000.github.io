@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.train2000.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="以下内容版本截至11月9日可用，后续若有更改会定期进行更新，懒人请直接进入首页左侧导航栏“狗东京豆”上车。机器人需配合青龙面板使用，若还未搭建青龙面板请先移步青龙面板+xdd-plus小白教程  查看相关内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="傻妞机器人sillyGirl安装部署">
+<meta property="og:url" content="https://www.train2000.top/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="筱林同学的blog">
+<meta property="og:description" content="以下内容版本截至11月9日可用，后续若有更改会定期进行更新，懒人请直接进入首页左侧导航栏“狗东京豆”上车。机器人需配合青龙面板使用，若还未搭建青龙面板请先移步青龙面板+xdd-plus小白教程  查看相关内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.train2000.top/images/go_sucess.jpg">
+<meta property="og:image" content="https://www.train2000.top/images/silly_ok.jpg">
+<meta property="article:published_time" content="2021-11-09T09:03:31.000Z">
+<meta property="article:modified_time" content="2021-11-09T10:26:44.517Z">
+<meta property="article:author" content="Train">
+<meta property="article:tag" content="傻妞机器人">
+<meta property="article:tag" content="sillyGirl">
+<meta property="article:tag" content="青龙">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.train2000.top/images/go_sucess.jpg">
+
+<link rel="canonical" href="https://www.train2000.top/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>傻妞机器人sillyGirl安装部署 | 筱林同学的blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">筱林同学的blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-disclaimers">
+
+    <a href="/disclaimers/" rel="section"><i class="fa fa-info-circle fa-fw"></i>免责声明</a>
+
+  </li>
+        <li class="menu-item menu-item-jdc">
+
+    <a href="http://it-touch.cn:5753/" rel="noopener" target="_blank"><i class="fa fa-stop-circle fa-fw"></i>狗东京豆</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.train2000.top/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Train">
+      <meta itemprop="description" content="学无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="筱林同学的blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          傻妞机器人sillyGirl安装部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-09 17:03:31 / 修改时间：18:26:44" itemprop="dateCreated datePublished" datetime="2021-11-09T17:03:31+08:00">2021-11-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF/" itemprop="url" rel="index"><span itemprop="name">青龙面板</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" class="post-meta-item leancloud_visitors" data-flag-title="傻妞机器人sillyGirl安装部署" title="热度">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">热度：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以下内容版本截至11月9日可用，后续若有更改会定期进行更新，懒人请直接进入首页左侧导航栏“狗东京豆”上车。机器人需配合青龙面板使用，若还未搭建青龙面板请先移步<a target="_blank" rel="noopener" href="https://train2000.top/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/">青龙面板+xdd-plus小白教程</a>  查看相关内容</p>
+<span id="more"></span>
+
+<h4 id="安装go环境"><a href="#安装go环境" class="headerlink" title="安装go环境"></a>安装go环境</h4><h5 id="下载go安装包"><a href="#下载go安装包" class="headerlink" title="下载go安装包"></a>下载go安装包</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span> &amp;&amp; wget https://golang.google.cn/dl/go1.16.7.linux-amd64.tar.gz -O go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="解压安装包"><a href="#解压安装包" class="headerlink" title="解压安装包"></a>解压安装包</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h5 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>复制下面内容到文件最后面（进入文件按shift+g直接跳到最后一行，然后按o在下一行输入）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/<span class="built_in">local</span>/go/path</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure>
+<p>编辑完后先按esc，再按shift+g，输入wq，保存并退出。<br><strong>注：用宝塔面板的直接找到文件打开粘贴到最后面即可。</strong></p>
+<p>记得使用source命令使环境变量生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<p>最后查看go是否完成安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go env</span><br></pre></td></tr></table></figure>
+<p><img src="/images/go_sucess.jpg"></p>
+<h4 id="安装傻妞"><a href="#安装傻妞" class="headerlink" title="安装傻妞"></a>安装傻妞</h4><h5 id="拉取机器人库"><a href="#拉取机器人库" class="headerlink" title="拉取机器人库"></a>拉取机器人库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/cdle/sillyGirl</span><br></pre></td></tr></table></figure>
+<h5 id="拉取京东组件库"><a href="#拉取京东组件库" class="headerlink" title="拉取京东组件库"></a>拉取京东组件库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> sillyGirl/develop &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/ufuckee/jd_cookie</span><br></pre></td></tr></table></figure>
+
+<h5 id="新建dev-go文件"><a href="#新建dev-go文件" class="headerlink" title="新建dev.go文件"></a>新建dev.go文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/sillyGirl &amp;&amp; vi dev.go</span><br></pre></td></tr></table></figure>
+<p>把以下内容放进去</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"></span><br><span class="line"><span class="comment">//青龙2.9机器人</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/develop/qinglong&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//京东账号</span></span><br><span class="line">_ <span class="string">&quot;github.com/cdle/sillyGirl/develop/jd_cookie&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//腾讯QQ</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/qq&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Te Legram</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/tg&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//微信公众号</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/wxmp&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//微信号</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/wx&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>记得wq保存退出</p>
+<h5 id="编译并启动机器人"><a href="#编译并启动机器人" class="headerlink" title="编译并启动机器人"></a>编译并启动机器人</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go build</span><br><span class="line">chmod 777 sillyGirl    </span><br><span class="line">./sillyGirl       </span><br></pre></td></tr></table></figure>
+
+<p>等待弹出二维码，记得用需要做机器人的qq扫描，登录成功后开始配置傻妞。</p>
+<h4 id="配置傻妞"><a href="#配置傻妞" class="headerlink" title="配置傻妞"></a>配置傻妞</h4><p>扫码完成登录后，先不要退出，接下来对傻妞进行配置：</p>
+<p>用qq机器人给机器人自己发送以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">设置管理员账号</span><br><span class="line">set qq masters 用于管理的QQ号（不是机器人的qq）</span><br><span class="line"></span><br><span class="line">禁用机器人自己回复信息</span><br><span class="line">set qq onself false</span><br></pre></td></tr></table></figure>
+<p>接下来就可以用管理员qq开始配置了</p>
+<p><strong>必需配置：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">设置青龙openapi的client_id参数</span><br><span class="line">set qinglong client_id ?</span><br><span class="line"></span><br><span class="line">设置青龙openapi的client_secret参数</span><br><span class="line">set qinglong client_secret ?</span><br><span class="line"></span><br><span class="line">设置青龙面板地址</span><br><span class="line">set qinglong host http://青龙IP地址:青龙端口号</span><br></pre></td></tr></table></figure>
+
+<p><strong>可选配置：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">傻妞机器人名</span><br><span class="line">set sillyGirl name 傻妞</span><br><span class="line"></span><br><span class="line">傻妞http服务端口</span><br><span class="line">set sillyGirl port 8080</span><br><span class="line"></span><br><span class="line">傻妞消息撤回等待时间，单位秒</span><br><span class="line">set sillyGirl duration 5</span><br><span class="line"></span><br><span class="line">傻妞自动升级是否通知</span><br><span class="line">set sillyGirl update_notify false</span><br><span class="line"></span><br><span class="line">是否开启傻妞自动更新</span><br><span class="line">set sillyGirl auto_update true</span><br><span class="line"></span><br><span class="line">青龙是否开启自动隐藏重复任务功能</span><br><span class="line">set qinglong autoCronHideDuplicate true</span><br><span class="line"></span><br><span class="line">设置是否自动同意好友请求</span><br><span class="line">set qq auto_friend false</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>配置完后记得重启傻妞</p>
+<h5 id="重启傻妞"><a href="#重启傻妞" class="headerlink" title="重启傻妞"></a>重启傻妞</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -A|grep sillyGirl <span class="comment">##显示进程号</span></span><br><span class="line"><span class="built_in">kill</span> -9 xxxxxx <span class="comment">##杀掉进程</span></span><br><span class="line"><span class="built_in">cd</span> ~/sillyGirl &amp;&amp; ./sillyGirl  <span class="comment">##启动傻妞</span></span><br></pre></td></tr></table></figure>
+<p>等待加载数据库完成，出现以下内容表示机器人配置成功<br><img src="/images/silly_ok.jpg"></p>
+<p>按ctrl+c退出，输入以下内容让傻妞静默挂机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./sillyGirl -d</span><br></pre></td></tr></table></figure>
+
+
+
+<p>傻妞配置相关内容结束</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果觉得对你有用的话，不妨支持一下</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Train 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Train 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+  
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"><i class="fa fa-tag"></i> 傻妞机器人</a>
+              <a href="/tags/sillyGirl/" rel="tag"><i class="fa fa-tag"></i> sillyGirl</a>
+              <a href="/tags/%E9%9D%92%E9%BE%99/" rel="tag"><i class="fa fa-tag"></i> 青龙</a>
+          </div>
+   
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="prev" title="计算机组成原理与体系结构">
+      <i class="fa fa-chevron-left"></i> 计算机组成原理与体系结构
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85go%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">安装go环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDgo%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">下载go安装包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">解压安装包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">设置环境变量</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%82%BB%E5%A6%9E"><span class="nav-number">2.</span> <span class="nav-text">安装傻妞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">拉取机器人库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E4%BA%AC%E4%B8%9C%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="nav-number">2.2.</span> <span class="nav-text">拉取京东组件库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B0%E5%BB%BAdev-go%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">新建dev.go文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%B9%B6%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="nav-number">2.4.</span> <span class="nav-text">编译并启动机器人</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%82%BB%E5%A6%9E"><span class="nav-number">3.</span> <span class="nav-text">配置傻妞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E5%82%BB%E5%A6%9E"><span class="nav-number">3.1.</span> <span class="nav-text">重启傻妞</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Train"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Train</p>
+  <div class="site-description" itemprop="description">学无止境</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/train2000" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;train2000" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://strongforu.top/" title="http:&#x2F;&#x2F;strongforu.top" rel="noopener" target="_blank">strongforu</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://future-science.cn/" title="http:&#x2F;&#x2F;future-science.cn" rel="noopener" target="_blank">迷毂'blog</a>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" title="2021&#x2F;11&#x2F;09&#x2F;傻妞机器人sillyGirl安装部署&#x2F;">傻妞机器人sillyGirl安装部署</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2021/10/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="2021&#x2F;10&#x2F;23&#x2F;计算机组成原理与体系结构&#x2F;">计算机组成原理与体系结构</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="2021&#x2F;10&#x2F;23&#x2F;软件工程基础&#x2F;">软件工程基础</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/" title="2021&#x2F;10&#x2F;20&#x2F;nginx服务器配置ssl&#x2F;">nginx服务器配置ssl</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/" title="2021&#x2F;10&#x2F;17&#x2F;xdd相关依赖安装&#x2F;">xdd相关依赖安装</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/" title="2021&#x2F;10&#x2F;16&#x2F;青龙面板-xdd-plus小白教程&#x2F;">青龙面板+xdd-plus小白教程</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">渝ICP备2021010528号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Train</span>
+</div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '1LXROcO8F81vNzCtKYvU63uw-gzGzoHsz',
+      appKey     : 'phyviRrPlFLTolnYowgPrLSO',
+      placeholder: "说点什么吧",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
