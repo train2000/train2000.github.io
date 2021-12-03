@@ -60,6 +60,37 @@
       </tags>
   </entry>
   <entry>
+    <title>nginx服务器配置ssl</title>
+    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
+    <content><![CDATA[<p>这里暂只讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
+<span id="more"></span>
+
+<h3 id="拷贝证书文件"><a href="#拷贝证书文件" class="headerlink" title="拷贝证书文件"></a>拷贝证书文件</h3><p>将获取到的两个文件(.pem和.key)拷贝到服务器上<br>建议在网站根目录新建一个名为cert的目录来存放证书文件</p>
+<h3 id="更改nginx配置文件"><a href="#更改nginx配置文件" class="headerlink" title="更改nginx配置文件"></a>更改nginx配置文件</h3><p>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
+<p>在http{ }里面添加如下内容（有的文件里有此内容，默认是注释掉的，根据需要取消注释）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       443 ssl http2;</span><br><span class="line">       listen       [::]:443 ssl http2;</span><br><span class="line">       server_name  www.xxxxxx.xxx;  <span class="comment">#证书绑定的域名</span></span><br><span class="line">       root         xxxxxxxx;   <span class="comment">#网站根目录路径，根据自己的网站位置进行修改</span></span><br><span class="line"></span><br><span class="line">       ssl_certificate <span class="string">&quot;xxxxx.pem&quot;</span>;    <span class="comment">#这里替换为cert目录里的.pem文件，注意路径的使用</span></span><br><span class="line">       ssl_certificate_key <span class="string">&quot;xxxxxx.key&quot;</span>;  <span class="comment">#这里替换为cert目录里的.key文件，注意路径的使用</span></span><br><span class="line">       ssl_session_cache shared:SSL:1m;</span><br><span class="line">       ssl_session_timeout  10m;</span><br><span class="line">       ssl_ciphers HIGH:!aNULL:!MD5;    <span class="comment">#加密套件类型</span></span><br><span class="line">       ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;     <span class="comment">#TSL协议类型</span></span><br><span class="line">       <span class="comment"># Load configuration files for the default server block.</span></span><br><span class="line">       include /etc/nginx/default.d/*.conf;    <span class="comment">#这里无需修改</span></span><br><span class="line">	<span class="comment"># 以下内容为非必选项</span></span><br><span class="line">       error_page 404 /404.html;</span><br><span class="line">           location = /40x.html &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       error_page 500 502 503 504 /50x.html;</span><br><span class="line">           location = /50x.html &#123;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">#注意大括号一定要一一对应，否则可能会无法启用nginx服务</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP重定向（可选）"><a href="#HTTP重定向（可选）" class="headerlink" title="HTTP重定向（可选）"></a>HTTP重定向（可选）</h3><p>该设置可以使HTTP请求自动跳转HTTPS<br>在nginx.conf文件里找到</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen     80;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改server_name,同上<br>再加入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rewrite ^(.*)$ https://$host<span class="variable">$1</span>; <span class="comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span></span><br></pre></td></tr></table></figure>
+<h3 id="重启nginx服务"><a href="#重启nginx服务" class="headerlink" title="重启nginx服务"></a>重启nginx服务</h3><h4 id="方法1-进入nginx的可执行目录"><a href="#方法1-进入nginx的可执行目录" class="headerlink" title="方法1.进入nginx的可执行目录"></a>方法1.进入nginx的可执行目录</h4><p>通过nginx可执行文件重新加载配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin  <span class="comment">#进入Nginx服务的可执行目录。</span></span><br><span class="line">./nginx -s reload  <span class="comment">#重新载入配置文件。</span></span><br></pre></td></tr></table></figure>
+<h4 id="方法2-使用系统重启命令"><a href="#方法2-使用系统重启命令" class="headerlink" title="方法2.使用系统重启命令"></a>方法2.使用系统重启命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证是否成功"><a href="#验证是否成功" class="headerlink" title="验证是否成功"></a>验证是否成功</h3><p>在浏览器输 https://你的域名 ，如图位置出现一把锁的图案便大功告成</p>
+<p><img src="/images/success.png" alt="配置成功示例图"></p>
+]]></content>
+      <categories>
+        <category>服务器配置</category>
+      </categories>
+      <tags>
+        <tag>ssl</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>傻妞机器人sillyGirl安装部署</title>
     <url>/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p>以下内容版本截至11月9日可用，后续若有更改会定期进行更新，懒人请直接进入首页左侧导航栏“狗东京豆”上车。机器人需配合青龙面板使用，若还未搭建青龙面板请先移步<a href="https://train2000.top/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/">青龙面板+xdd-plus小白教程</a>  查看相关内容</p>
@@ -117,174 +148,6 @@
         <tag>傻妞机器人</tag>
         <tag>sillyGirl</tag>
         <tag>青龙</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx服务器配置ssl</title>
-    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
-    <content><![CDATA[<p>这里暂只讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
-<span id="more"></span>
-
-<h3 id="拷贝证书文件"><a href="#拷贝证书文件" class="headerlink" title="拷贝证书文件"></a>拷贝证书文件</h3><p>将获取到的两个文件(.pem和.key)拷贝到服务器上<br>建议在网站根目录新建一个名为cert的目录来存放证书文件</p>
-<h3 id="更改nginx配置文件"><a href="#更改nginx配置文件" class="headerlink" title="更改nginx配置文件"></a>更改nginx配置文件</h3><p>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
-<p>在http{ }里面添加如下内容（有的文件里有此内容，默认是注释掉的，根据需要取消注释）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       443 ssl http2;</span><br><span class="line">       listen       [::]:443 ssl http2;</span><br><span class="line">       server_name  www.xxxxxx.xxx;  <span class="comment">#证书绑定的域名</span></span><br><span class="line">       root         xxxxxxxx;   <span class="comment">#网站根目录路径，根据自己的网站位置进行修改</span></span><br><span class="line"></span><br><span class="line">       ssl_certificate <span class="string">&quot;xxxxx.pem&quot;</span>;    <span class="comment">#这里替换为cert目录里的.pem文件，注意路径的使用</span></span><br><span class="line">       ssl_certificate_key <span class="string">&quot;xxxxxx.key&quot;</span>;  <span class="comment">#这里替换为cert目录里的.key文件，注意路径的使用</span></span><br><span class="line">       ssl_session_cache shared:SSL:1m;</span><br><span class="line">       ssl_session_timeout  10m;</span><br><span class="line">       ssl_ciphers HIGH:!aNULL:!MD5;    <span class="comment">#加密套件类型</span></span><br><span class="line">       ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;     <span class="comment">#TSL协议类型</span></span><br><span class="line">       <span class="comment"># Load configuration files for the default server block.</span></span><br><span class="line">       include /etc/nginx/default.d/*.conf;    <span class="comment">#这里无需修改</span></span><br><span class="line">	<span class="comment"># 以下内容为非必选项</span></span><br><span class="line">       error_page 404 /404.html;</span><br><span class="line">           location = /40x.html &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       error_page 500 502 503 504 /50x.html;</span><br><span class="line">           location = /50x.html &#123;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">#注意大括号一定要一一对应，否则可能会无法启用nginx服务</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="HTTP重定向（可选）"><a href="#HTTP重定向（可选）" class="headerlink" title="HTTP重定向（可选）"></a>HTTP重定向（可选）</h3><p>该设置可以使HTTP请求自动跳转HTTPS<br>在nginx.conf文件里找到</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen     80;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>修改server_name,同上<br>再加入如下内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rewrite ^(.*)$ https://$host<span class="variable">$1</span>; <span class="comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span></span><br></pre></td></tr></table></figure>
-<h3 id="重启nginx服务"><a href="#重启nginx服务" class="headerlink" title="重启nginx服务"></a>重启nginx服务</h3><h4 id="方法1-进入nginx的可执行目录"><a href="#方法1-进入nginx的可执行目录" class="headerlink" title="方法1.进入nginx的可执行目录"></a>方法1.进入nginx的可执行目录</h4><p>通过nginx可执行文件重新加载配置文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin  <span class="comment">#进入Nginx服务的可执行目录。</span></span><br><span class="line">./nginx -s reload  <span class="comment">#重新载入配置文件。</span></span><br></pre></td></tr></table></figure>
-<h4 id="方法2-使用系统重启命令"><a href="#方法2-使用系统重启命令" class="headerlink" title="方法2.使用系统重启命令"></a>方法2.使用系统重启命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
-
-<h3 id="验证是否成功"><a href="#验证是否成功" class="headerlink" title="验证是否成功"></a>验证是否成功</h3><p>在浏览器输 https://你的域名 ，如图位置出现一把锁的图案便大功告成</p>
-<p><img src="/images/success.png" alt="配置成功示例图"></p>
-]]></content>
-      <categories>
-        <category>服务器配置</category>
-      </categories>
-      <tags>
-        <tag>ssl</tag>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机组成原理与体系结构</title>
-    <url>/2021/10/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<style>
-    .indent{
-        text-indent:2em;
-    }
-    .unline{text-decoration:underline;}
-    .cankao,.span_notice{
-    color:red;
-    }
-</style>
-<h3 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h3><h4 id="进制表示"><a href="#进制表示" class="headerlink" title="进制表示"></a>进制表示</h4><p class="indent">R进制转十进制使用按权展开法，其具体操作方式为∶将R进制数的每一位数值用R的k次方形式表示，即幂的底数是R，指数为k ，k与该位和小数点之间的距离有关。当该位位于小数点左边，k值是该位和小数点之间数码的个数,而当该位位于小数点右边，k值是负值，其绝对值是该位和小数点之间数码的个数加1。</p>
-
-<p>例：<br>二进制11010.11 = 1 x 2^4 + 1 x 2^3 + 0 x 2^2 + 1 x 2^1 + 0 x 2^0 + 1 x 2^-1 + 1 x 2^-2=26.75<br>六进制532.13 = 5 x 6^2 + 3 x 6^1 + 2 x 6^0 + 1 x 6^-1 + 3 x 6^-2</p>
-<h4 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h4><h5 id="二进制与八进制"><a href="#二进制与八进制" class="headerlink" title="二进制与八进制"></a>二进制与八进制</h5><p>二进制转八进制：</p>
-<p class="indent">从小数点开始，小数点前从小数点开始向左每三位为一组，最后不足三位的可以添0补足，小数点后向右每三位一组，不足三位必须添0补齐。然后将每组按权相加，即得到八进制数。</p>
-
-<p>八进制转二进制：</p>
-<p class="indent">同上面相似，从小数点开始向左右开始，把每一位数转换成二进制即可。</p>
-
-<h5 id="二进制与十六进制"><a href="#二进制与十六进制" class="headerlink" title="二进制与十六进制"></a>二进制与十六进制</h5><p>二进制转十六进制：</p>
-<p class="indent">与二进制和八进制的转换相似，每四位一组，然后再按权相加。需要注意的是，9之后的数用字母A--F表示，如13应表示为D。（注：末尾为H表示该数是十六进制数）</p>
-
-<p>十六进制转二进制：</p>
-<p class="indent">与八进制转二进制方法相同。</p>
-
-<p>注：八进制与十六进制的转换，需先转为二进制，再转换成八进制或十六进制。</p>
-<h5 id="十进制转R进制"><a href="#十进制转R进制" class="headerlink" title="十进制转R进制"></a>十进制转R进制</h5><p class="indent">十进制转R进制可以使用短除法。如将十进制的83转成3进制：</p>
- <ul>
- 3|<span class="unline">83</span>&nbsp;&nbsp;&nbsp;&nbsp;余数&nbsp;&nbsp;2<br>
- 3|<span class="unline">27</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
-3|<span class="unline">9</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
- 3|<span class="unline">3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;<span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
- </ul>
-
-<p>最后再从下往上读其余数，即十进制的83用3进制表示为：10002 。</p>
-<p><span class="cankao">详情参考：</span><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=3">https://www.bilibili.com/video/BV1yU4y1371J?p=3</a></p>
-<h4 id="源码反码补码移码"><a href="#源码反码补码移码" class="headerlink" title="源码反码补码移码"></a>源码反码补码移码</h4><p><img src="/images/zhuanma.png" alt="码值转换"><br>源码：把一个数转成二进制即为它的源码（若为带符号的，取其最高位，每8位一组，不足8位的在前面添0补齐，正数首位为0，负数首位为1）。<br>反码：正数的反码是其本身，负数的反码是在其原码的基础上符号位不变，其余各个位取反<br>补码：正数的补码就是其本身，负数的补码是在其反码的基础上+1<br>移码：不管正负数，只要将其补码的符号位取反即可</p>
-<p>表示范围：<br><br><img src="/images/zone.jpg" alt="表示范围"></p>
-<p><span class="cankao">详情参考：</span><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=4">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
-<h3 id="计算机结构"><a href="#计算机结构" class="headerlink" title="计算机结构"></a>计算机结构</h3><p class="indent">传统计算机一般由以下部分组成：运算器、控制器、存储器、I/O设备，运算器和控制器共同组成CPU（中央处理器），存储器又分为内存储器（RAM、ROM）和外存储器（硬盘、U盘、磁带等）。</p>
-
-<p>运算器的构成：</p>
-<ol>
-<li>算术逻辑单元ALU</li>
-<li>累加寄存器AC</li>
-<li>数据缓冲寄存器DR</li>
-<li>状态条件寄存器PSw</li>
-</ol>
-<p>控制器的构成：</p>
-<ol>
-<li>程序计数器PC</li>
-<li>指令寄存器IR</li>
-<li>指令译码器</li>
-<li>时序部件</li>
-</ol>
-<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=6">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a><br><br><a href="https://blog.csdn.net/L_gentleman/article/details/93377576">https://blog.csdn.net/L_gentleman/article/details/93377576</a></p>
-<h3 id="flynn分类法"><a href="#flynn分类法" class="headerlink" title="flynn分类法"></a>flynn分类法</h3><p><img src="/images/flynn.jpg" alt="flynn分类法"></p>
-<h3 id="CISC与RISC"><a href="#CISC与RISC" class="headerlink" title="CISC与RISC"></a>CISC与RISC</h3><p><img src="/images/CISC&RISC.jpg" alt="CISC与RISC"></p>
-<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=8">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
-<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><ol>
-<li><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p class="indent">流水线是指在程序执行时多条指令重叠进行操作的一种准并行处理实现技术。各种部件同时处理是针对不同指令而言的，它们可以同时为多条指令的不同部分进行工作，以提高各部件的利用率和指令的平均执行速度。</p></li>
-</ol>
-<p>指令执行顺序： 取指—&gt;分析—&gt;执行</p>
-<p><img src="/images/lsx_zxqk.jpg"></p>
-<p class="indent">如图所示，在未使用流水线的情况下，需要先完成某一条指令的执行操作后，再进行下一条指令的操作；当使用了流水线后，只要前一条指令的一部分操作已完成，那么就会开始下一条指令的对应操作，从而减少了指令的处理时间。</p>
-
-<ol start="2">
-<li><h4 id="流水线的计算"><a href="#流水线的计算" class="headerlink" title="流水线的计算"></a>流水线的计算</h4></li>
-</ol>
-<p>直接上例题：</p>
-<p class="indent">若指令流水线把一条指令分为取指、分析、执行三部分，且三部分的时间分别为取指2ns、分析2ns、执行1ns。求：流水线的周期是多少？100条指令全部执行完毕的时间是多少？</p>
-
-<p><strong>知识引入：</strong></p>
-<ul>
-<li>流水线周期（▲t ）：执行时间最长的一段</li>
-<li>流水线计算公式：<ol>
-<li><span class="span_notice">一条指令执行完毕时间+（指令条数-1）* 流水线周期</span></li>
-<li>理论公式：<span class="span_notice">(t1+t2+t3+…+tk)+(n-1)*▲t</span>  （考的比较多）</li>
-<li>实践公式：<span class="span_notice">(k+n-1)*▲t</span></li>
-</ol>
-</li>
-<li>k表示把一条指令分为了几部分</li>
-<li>n表示一共有多少条指令</li>
-</ul>
-<p><strong>解答：</strong></p>
-<p class="indent">在本题中，由于三部分时间最长的为取指和分析两部分，它们的时间都为2ns，即<span class="span_notice">流水线周期为2</span>；指令共有三部分，即<span class="span_notice">k为3</span> 。</p>
-使用理论公式计算：(2+2+1)+(100-1)*2=203ns
-
-<p>使用实践公式计算：(3+100-1)*2=204ns</p>
-<ol start="3">
-<li><h4 id="流水线吞吐量计算"><a href="#流水线吞吐量计算" class="headerlink" title="流水线吞吐量计算"></a>流水线吞吐量计算</h4></li>
-</ol>
-<p class="indent">流水线的吞吐率（Though  Put  rate，TP）是指在单位时间内流水线所完成的任务数量或输出的结果数量。公式如下：</p>
-TP=指令条数/流水线执行时间
-
-<p>流水线最大吞吐率： TP(max)=1/▲t </p>
-<p class="indent">以上面的例题为例，其流水线周期为2ns，共有100条指令，执行完所有指令消耗的时间为203ns，那么该流水线的吞吐率为：</p>
-TP = 100/203；
-最大吞吐率为：
-TP(max) = 1 / 2
-
-<ol start="4">
-<li><h4 id="流水线加速比计算"><a href="#流水线加速比计算" class="headerlink" title="流水线加速比计算"></a>流水线加速比计算</h4></li>
-</ol>
-<p>公式：<br>S = 不使用流水线执行时间/使用流水线执行时间</p>
-<p class="indent">前面提到不使用流水线时，需要等当前指令执行结束后再开始执行下一条指令，因此，在这种情况下，执行一条指令所需要的时间为2+2+1=5ns，共有100条指令，故执行完所有指令所需的时间为500ns，而使用流水线的执行时间仅为203ns，所以流水线加速比为：</p>
-S = 500 / 203
-
-
-
-<h3 id="计算机层次化存储结构"><a href="#计算机层次化存储结构" class="headerlink" title="计算机层次化存储结构"></a>计算机层次化存储结构</h3><p>计算机存储结构如图：</p>
-<p><img src="/images/cunchujiegou.jpg"></p>
-<h3 id="cache的基本概念"><a href="#cache的基本概念" class="headerlink" title="cache的基本概念"></a>cache的基本概念</h3><p class="indent">cache的功能：提高CPU数据的I/O速率，突破了冯·诺依曼瓶颈，即CPU与存储系统间数据传送贷款限制。</p>
-在计算机存储体系中，cache是访问速度最快的层次。
-使用cache改善系统性能的依据是程序的局部性原理。
-
-
-<p class="indent">如果以h代表队cache的访问命中率，t1表示cache的周期时间，t2表示煮存储器周期时间，以读操作为例，使用<span class="span_notice">cache+主存储器</span>的系统的平均周期为t3，则：
-</p>
-
-<pre><code>t3 = h * t1 + (1-h) * t2
-</code></pre>
-<p>其中，(1-h) 又称为失效率（未命中率）。</p>
-<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h4 id="磁盘结构与参数"><a href="#磁盘结构与参数" class="headerlink" title="磁盘结构与参数"></a>磁盘结构与参数</h4><p><img src="/images/disk.jpg"></p>
-<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=17">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
-]]></content>
-      <categories>
-        <category>计算机组成</category>
-      </categories>
-      <tags>
-        <tag>软考</tag>
-        <tag>计算机组成</tag>
       </tags>
   </entry>
   <entry>
@@ -511,7 +374,53 @@ S = 500 / 203
 
 
 
-<h3 id="二叉树的应用"><a href="#二叉树的应用" class="headerlink" title="二叉树的应用"></a>二叉树的应用</h3>]]></content>
+<h3 id="二叉树的应用"><a href="#二叉树的应用" class="headerlink" title="二叉树的应用"></a>二叉树的应用</h3><h2 id="查找-1"><a href="#查找-1" class="headerlink" title="查找"></a>查找</h2><h3 id="顺序查找"><a href="#顺序查找" class="headerlink" title="顺序查找"></a>顺序查找</h3><h4 id="查找表的结构"><a href="#查找表的结构" class="headerlink" title="查找表的结构"></a>查找表的结构</h4><p>查找表的结构，决定了查找数据的方式</p>
+<ul>
+<li>查找表是一组无序的数据；</li>
+<li>查找表是一组有序的数据；</li>
+<li>查找表是线性结构；</li>
+<li>查找表是非线性结构。</li>
+</ul>
+<h4 id="查找分类"><a href="#查找分类" class="headerlink" title="查找分类"></a>查找分类</h4><p><strong>静态查找表</strong><br>只查找，不改变表的数据</p>
+<p><strong>动态查找表</strong><br>在查找过程中，修改表中的数据（插入、删除）</p>
+<p><strong>平均查找长度（平均比较次数）</strong></p>
+<p><img src="/images/image-20211202160554475.png" alt="image-20211202160554475"></p>
+<p><strong>顺序查找</strong></p>
+<p><img src="/images/image-20211202160712072.png" alt="image-20211202160712072"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">linerSearch</span> <span class="params">( SeqRList  L ,    keyType  k )</span>   </span>&#123;</span><br><span class="line"></span><br><span class="line">        L.r[ <span class="number">0</span> ] .key = k;      <span class="comment">//监视哨</span></span><br><span class="line">        i=L.length;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>( L.r[ i ] .key != k)    <span class="comment">//反向查找</span></span><br><span class="line">                  i--;  </span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span>     i;     <span class="comment">//返回位置，失败时i=0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>优点</strong>：算法简单，适应面广</p>
+<p><strong>缺点</strong>：平均查找长度大，</p>
+<p><strong>顺序查找的性能</strong></p>
+<p><img src="/images/image-20211202160745279.png" alt="image-20211202160745279"></p>
+<p><img src="/images/image-20211202160833368.png" alt="image-20211202160833368"></p>
+<h3 id="折半查找"><a href="#折半查找" class="headerlink" title="折半查找"></a>折半查找</h3><p><img src="/images/image-20211202185151523.png" alt="image-20211202185151523"></p>
+<p><img src="/images/image-20211202185241561.png" alt="image-20211202185241561"></p>
+<p><strong>折半查找性能</strong></p>
+<p><img src="/images/image-20211202185315320.png" alt="image-20211202185315320"></p>
+<p><strong>折半查找实现</strong></p>
+<p><img src="/images/image-20211202185346353.png" alt="image-20211202185346353"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>   <span class="title">binarySearch</span><span class="params">( SSTable  ST,  <span class="keyword">int</span>  key )</span>   </span>&#123;</span><br><span class="line"></span><br><span class="line">	     <span class="keyword">int</span>    low = <span class="number">1</span> ， high = ST.length;      <span class="comment">// 初始上界、下界</span></span><br><span class="line"></span><br><span class="line">	     <span class="keyword">while</span> ( low &lt;= high )   &#123;</span><br><span class="line">		    <span class="keyword">int</span>   mid = ( low+high )/<span class="number">2</span>;     <span class="comment">// 中间位置</span></span><br><span class="line">		    <span class="keyword">if</span> ( key == ST.elem[mid] )</span><br><span class="line">			     <span class="keyword">return</span>    mid;           <span class="comment">//成功，返回位置</span></span><br><span class="line">		    <span class="keyword">else</span>  <span class="keyword">if</span> ( key &lt; a[mid] )</span><br><span class="line">			      high = mid<span class="number">-1</span>;         <span class="comment">//左半边继续查找</span></span><br><span class="line">		    <span class="keyword">else</span></span><br><span class="line">			      low = mid+<span class="number">1</span>;      <span class="comment">//右半边继续查找</span></span><br><span class="line">	     &#125;</span><br><span class="line">	     <span class="keyword">return</span>    <span class="number">0</span>;     <span class="comment">// 失败</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p><strong>索引表查找</strong></p>
+<p><img src="/images/image-20211202185455002.png" alt="image-20211202185455002"></p>
+<h3 id="哈希查找"><a href="#哈希查找" class="headerlink" title="哈希查找"></a>哈希查找</h3><p><strong>哈希表查找（散列）</strong></p>
+<p>查找时不需要进行比较；<br>直接通过公式直接计算出元素的地址（位置）。</p>
+<p><img src="/images/image-20211202185609904.png" alt="image-20211202185609904"></p>
+<p><img src="/images/image-20211202185659001.png" alt="image-20211202185659001"></p>
+<p><img src="/images/image-20211202185709009.png" alt="image-20211202185709009"></p>
+<h4 id="哈希函数的构造方法"><a href="#哈希函数的构造方法" class="headerlink" title="哈希函数的构造方法"></a>哈希函数的构造方法</h4><h5 id="直接地址法"><a href="#直接地址法" class="headerlink" title="直接地址法"></a>直接地址法</h5><p><img src="/images/image-20211202185808890.png" alt="image-20211202185808890"></p>
+<h5 id="除留取余法"><a href="#除留取余法" class="headerlink" title="除留取余法"></a>除留取余法</h5><p><img src="/images/image-20211202185833888.png" alt="image-20211202185833888"></p>
+<h5 id="平方取中法"><a href="#平方取中法" class="headerlink" title="平方取中法"></a>平方取中法</h5><p><img src="/images/image-20211202185853290.png" alt="image-20211202185853290"></p>
+<h5 id="数字分析法"><a href="#数字分析法" class="headerlink" title="数字分析法"></a>数字分析法</h5><p><img src="/images/image-20211202185909642.png" alt="image-20211202185909642"></p>
+<h4 id="处理冲突的方法"><a href="#处理冲突的方法" class="headerlink" title="处理冲突的方法"></a>处理冲突的方法</h4><h5 id="开放定址法之“线性探测法-”"><a href="#开放定址法之“线性探测法-”" class="headerlink" title="开放定址法之“线性探测法 ”"></a>开放定址法之“线性探测法 ”</h5><p>若在地址t处冲突，则从t开始顺次探测相邻的下一个空闲位置</p>
+<p><img src="/images/image-20211202190015633.png" alt="image-20211202190015633"></p>
+<p><strong>例：</strong></p>
+<p><img src="/images/image-20211202190119763.png" alt="image-20211202190119763"></p>
+<p><img src="/images/image-20211202190146220.png" alt="image-20211202190146220"></p>
+<h5 id="链地址法"><a href="#链地址法" class="headerlink" title="链地址法"></a>链地址法</h5><p>相同地址的关键字，同一个链表中                    </p>
+<p><img src="/images/image-20211202190235561.png" alt="image-20211202190235561"></p>
+]]></content>
       <categories>
         <category>数据结构</category>
       </categories>
@@ -536,6 +445,143 @@ S = 500 / 203
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
       <tags>
         <tag>软件工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机组成原理与体系结构</title>
+    <url>/2021/10/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<style>
+    .indent{
+        text-indent:2em;
+    }
+    .unline{text-decoration:underline;}
+    .cankao,.span_notice{
+    color:red;
+    }
+</style>
+<h3 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h3><h4 id="进制表示"><a href="#进制表示" class="headerlink" title="进制表示"></a>进制表示</h4><p class="indent">R进制转十进制使用按权展开法，其具体操作方式为∶将R进制数的每一位数值用R的k次方形式表示，即幂的底数是R，指数为k ，k与该位和小数点之间的距离有关。当该位位于小数点左边，k值是该位和小数点之间数码的个数,而当该位位于小数点右边，k值是负值，其绝对值是该位和小数点之间数码的个数加1。</p>
+
+<p>例：<br>二进制11010.11 = 1 x 2^4 + 1 x 2^3 + 0 x 2^2 + 1 x 2^1 + 0 x 2^0 + 1 x 2^-1 + 1 x 2^-2=26.75<br>六进制532.13 = 5 x 6^2 + 3 x 6^1 + 2 x 6^0 + 1 x 6^-1 + 3 x 6^-2</p>
+<h4 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h4><h5 id="二进制与八进制"><a href="#二进制与八进制" class="headerlink" title="二进制与八进制"></a>二进制与八进制</h5><p>二进制转八进制：</p>
+<p class="indent">从小数点开始，小数点前从小数点开始向左每三位为一组，最后不足三位的可以添0补足，小数点后向右每三位一组，不足三位必须添0补齐。然后将每组按权相加，即得到八进制数。</p>
+
+<p>八进制转二进制：</p>
+<p class="indent">同上面相似，从小数点开始向左右开始，把每一位数转换成二进制即可。</p>
+
+<h5 id="二进制与十六进制"><a href="#二进制与十六进制" class="headerlink" title="二进制与十六进制"></a>二进制与十六进制</h5><p>二进制转十六进制：</p>
+<p class="indent">与二进制和八进制的转换相似，每四位一组，然后再按权相加。需要注意的是，9之后的数用字母A--F表示，如13应表示为D。（注：末尾为H表示该数是十六进制数）</p>
+
+<p>十六进制转二进制：</p>
+<p class="indent">与八进制转二进制方法相同。</p>
+
+<p>注：八进制与十六进制的转换，需先转为二进制，再转换成八进制或十六进制。</p>
+<h5 id="十进制转R进制"><a href="#十进制转R进制" class="headerlink" title="十进制转R进制"></a>十进制转R进制</h5><p class="indent">十进制转R进制可以使用短除法。如将十进制的83转成3进制：</p>
+ <ul>
+ 3|<span class="unline">83</span>&nbsp;&nbsp;&nbsp;&nbsp;余数&nbsp;&nbsp;2<br>
+ 3|<span class="unline">27</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
+3|<span class="unline">9</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
+ 3|<span class="unline">3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;<span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+ </ul>
+
+<p>最后再从下往上读其余数，即十进制的83用3进制表示为：10002 。</p>
+<p><span class="cankao">详情参考：</span><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=3">https://www.bilibili.com/video/BV1yU4y1371J?p=3</a></p>
+<h4 id="源码反码补码移码"><a href="#源码反码补码移码" class="headerlink" title="源码反码补码移码"></a>源码反码补码移码</h4><p><img src="/images/zhuanma.png" alt="码值转换"><br>源码：把一个数转成二进制即为它的源码（若为带符号的，取其最高位，每8位一组，不足8位的在前面添0补齐，正数首位为0，负数首位为1）。<br>反码：正数的反码是其本身，负数的反码是在其原码的基础上符号位不变，其余各个位取反<br>补码：正数的补码就是其本身，负数的补码是在其反码的基础上+1<br>移码：不管正负数，只要将其补码的符号位取反即可</p>
+<p>表示范围：<br><br><img src="/images/zone.jpg" alt="表示范围"></p>
+<p><span class="cankao">详情参考：</span><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=4">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
+<h3 id="计算机结构"><a href="#计算机结构" class="headerlink" title="计算机结构"></a>计算机结构</h3><p class="indent">传统计算机一般由以下部分组成：运算器、控制器、存储器、I/O设备，运算器和控制器共同组成CPU（中央处理器），存储器又分为内存储器（RAM、ROM）和外存储器（硬盘、U盘、磁带等）。</p>
+
+<p>运算器的构成：</p>
+<ol>
+<li>算术逻辑单元ALU</li>
+<li>累加寄存器AC</li>
+<li>数据缓冲寄存器DR</li>
+<li>状态条件寄存器PSw</li>
+</ol>
+<p>控制器的构成：</p>
+<ol>
+<li>程序计数器PC</li>
+<li>指令寄存器IR</li>
+<li>指令译码器</li>
+<li>时序部件</li>
+</ol>
+<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=6">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a><br><br><a href="https://blog.csdn.net/L_gentleman/article/details/93377576">https://blog.csdn.net/L_gentleman/article/details/93377576</a></p>
+<h3 id="flynn分类法"><a href="#flynn分类法" class="headerlink" title="flynn分类法"></a>flynn分类法</h3><p><img src="/images/flynn.jpg" alt="flynn分类法"></p>
+<h3 id="CISC与RISC"><a href="#CISC与RISC" class="headerlink" title="CISC与RISC"></a>CISC与RISC</h3><p><img src="/images/CISC&RISC.jpg" alt="CISC与RISC"></p>
+<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=8">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
+<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><ol>
+<li><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p class="indent">流水线是指在程序执行时多条指令重叠进行操作的一种准并行处理实现技术。各种部件同时处理是针对不同指令而言的，它们可以同时为多条指令的不同部分进行工作，以提高各部件的利用率和指令的平均执行速度。</p></li>
+</ol>
+<p>指令执行顺序： 取指—&gt;分析—&gt;执行</p>
+<p><img src="/images/lsx_zxqk.jpg"></p>
+<p class="indent">如图所示，在未使用流水线的情况下，需要先完成某一条指令的执行操作后，再进行下一条指令的操作；当使用了流水线后，只要前一条指令的一部分操作已完成，那么就会开始下一条指令的对应操作，从而减少了指令的处理时间。</p>
+
+<ol start="2">
+<li><h4 id="流水线的计算"><a href="#流水线的计算" class="headerlink" title="流水线的计算"></a>流水线的计算</h4></li>
+</ol>
+<p>直接上例题：</p>
+<p class="indent">若指令流水线把一条指令分为取指、分析、执行三部分，且三部分的时间分别为取指2ns、分析2ns、执行1ns。求：流水线的周期是多少？100条指令全部执行完毕的时间是多少？</p>
+
+<p><strong>知识引入：</strong></p>
+<ul>
+<li>流水线周期（▲t ）：执行时间最长的一段</li>
+<li>流水线计算公式：<ol>
+<li><span class="span_notice">一条指令执行完毕时间+（指令条数-1）* 流水线周期</span></li>
+<li>理论公式：<span class="span_notice">(t1+t2+t3+…+tk)+(n-1)*▲t</span>  （考的比较多）</li>
+<li>实践公式：<span class="span_notice">(k+n-1)*▲t</span></li>
+</ol>
+</li>
+<li>k表示把一条指令分为了几部分</li>
+<li>n表示一共有多少条指令</li>
+</ul>
+<p><strong>解答：</strong></p>
+<p class="indent">在本题中，由于三部分时间最长的为取指和分析两部分，它们的时间都为2ns，即<span class="span_notice">流水线周期为2</span>；指令共有三部分，即<span class="span_notice">k为3</span> 。</p>
+使用理论公式计算：(2+2+1)+(100-1)*2=203ns
+
+<p>使用实践公式计算：(3+100-1)*2=204ns</p>
+<ol start="3">
+<li><h4 id="流水线吞吐量计算"><a href="#流水线吞吐量计算" class="headerlink" title="流水线吞吐量计算"></a>流水线吞吐量计算</h4></li>
+</ol>
+<p class="indent">流水线的吞吐率（Though  Put  rate，TP）是指在单位时间内流水线所完成的任务数量或输出的结果数量。公式如下：</p>
+TP=指令条数/流水线执行时间
+
+<p>流水线最大吞吐率： TP(max)=1/▲t </p>
+<p class="indent">以上面的例题为例，其流水线周期为2ns，共有100条指令，执行完所有指令消耗的时间为203ns，那么该流水线的吞吐率为：</p>
+TP = 100/203；
+最大吞吐率为：
+TP(max) = 1 / 2
+
+<ol start="4">
+<li><h4 id="流水线加速比计算"><a href="#流水线加速比计算" class="headerlink" title="流水线加速比计算"></a>流水线加速比计算</h4></li>
+</ol>
+<p>公式：<br>S = 不使用流水线执行时间/使用流水线执行时间</p>
+<p class="indent">前面提到不使用流水线时，需要等当前指令执行结束后再开始执行下一条指令，因此，在这种情况下，执行一条指令所需要的时间为2+2+1=5ns，共有100条指令，故执行完所有指令所需的时间为500ns，而使用流水线的执行时间仅为203ns，所以流水线加速比为：</p>
+S = 500 / 203
+
+
+
+<h3 id="计算机层次化存储结构"><a href="#计算机层次化存储结构" class="headerlink" title="计算机层次化存储结构"></a>计算机层次化存储结构</h3><p>计算机存储结构如图：</p>
+<p><img src="/images/cunchujiegou.jpg"></p>
+<h3 id="cache的基本概念"><a href="#cache的基本概念" class="headerlink" title="cache的基本概念"></a>cache的基本概念</h3><p class="indent">cache的功能：提高CPU数据的I/O速率，突破了冯·诺依曼瓶颈，即CPU与存储系统间数据传送贷款限制。</p>
+在计算机存储体系中，cache是访问速度最快的层次。
+使用cache改善系统性能的依据是程序的局部性原理。
+
+
+<p class="indent">如果以h代表队cache的访问命中率，t1表示cache的周期时间，t2表示煮存储器周期时间，以读操作为例，使用<span class="span_notice">cache+主存储器</span>的系统的平均周期为t3，则：
+</p>
+
+<pre><code>t3 = h * t1 + (1-h) * t2
+</code></pre>
+<p>其中，(1-h) 又称为失效率（未命中率）。</p>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h4 id="磁盘结构与参数"><a href="#磁盘结构与参数" class="headerlink" title="磁盘结构与参数"></a>磁盘结构与参数</h4><p><img src="/images/disk.jpg"></p>
+<p><span class="cankao">参考：</span><br><a href="https://www.bilibili.com/video/BV1yU4y1371J?p=17">https://www.bilibili.com/video/BV1yU4y1371J?p=4</a></p>
+]]></content>
+      <categories>
+        <category>计算机组成</category>
+      </categories>
+      <tags>
+        <tag>软考</tag>
+        <tag>计算机组成</tag>
       </tags>
   </entry>
   <entry>
