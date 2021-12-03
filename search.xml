@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>nginx服务器配置ssl</title>
+    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
+    <content><![CDATA[<p>这里暂只讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
+<span id="more"></span>
+
+<h3 id="拷贝证书文件"><a href="#拷贝证书文件" class="headerlink" title="拷贝证书文件"></a>拷贝证书文件</h3><p>将获取到的两个文件(.pem和.key)拷贝到服务器上<br>建议在网站根目录新建一个名为cert的目录来存放证书文件</p>
+<h3 id="更改nginx配置文件"><a href="#更改nginx配置文件" class="headerlink" title="更改nginx配置文件"></a>更改nginx配置文件</h3><p>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
+<p>在http{ }里面添加如下内容（有的文件里有此内容，默认是注释掉的，根据需要取消注释）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       443 ssl http2;</span><br><span class="line">       listen       [::]:443 ssl http2;</span><br><span class="line">       server_name  www.xxxxxx.xxx;  <span class="comment">#证书绑定的域名</span></span><br><span class="line">       root         xxxxxxxx;   <span class="comment">#网站根目录路径，根据自己的网站位置进行修改</span></span><br><span class="line"></span><br><span class="line">       ssl_certificate <span class="string">&quot;xxxxx.pem&quot;</span>;    <span class="comment">#这里替换为cert目录里的.pem文件，注意路径的使用</span></span><br><span class="line">       ssl_certificate_key <span class="string">&quot;xxxxxx.key&quot;</span>;  <span class="comment">#这里替换为cert目录里的.key文件，注意路径的使用</span></span><br><span class="line">       ssl_session_cache shared:SSL:1m;</span><br><span class="line">       ssl_session_timeout  10m;</span><br><span class="line">       ssl_ciphers HIGH:!aNULL:!MD5;    <span class="comment">#加密套件类型</span></span><br><span class="line">       ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;     <span class="comment">#TSL协议类型</span></span><br><span class="line">       <span class="comment"># Load configuration files for the default server block.</span></span><br><span class="line">       include /etc/nginx/default.d/*.conf;    <span class="comment">#这里无需修改</span></span><br><span class="line">	<span class="comment"># 以下内容为非必选项</span></span><br><span class="line">       error_page 404 /404.html;</span><br><span class="line">           location = /40x.html &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       error_page 500 502 503 504 /50x.html;</span><br><span class="line">           location = /50x.html &#123;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">#注意大括号一定要一一对应，否则可能会无法启用nginx服务</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP重定向（可选）"><a href="#HTTP重定向（可选）" class="headerlink" title="HTTP重定向（可选）"></a>HTTP重定向（可选）</h3><p>该设置可以使HTTP请求自动跳转HTTPS<br>在nginx.conf文件里找到</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen     80;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改server_name,同上<br>再加入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rewrite ^(.*)$ https://$host<span class="variable">$1</span>; <span class="comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span></span><br></pre></td></tr></table></figure>
+<h3 id="重启nginx服务"><a href="#重启nginx服务" class="headerlink" title="重启nginx服务"></a>重启nginx服务</h3><h4 id="方法1-进入nginx的可执行目录"><a href="#方法1-进入nginx的可执行目录" class="headerlink" title="方法1.进入nginx的可执行目录"></a>方法1.进入nginx的可执行目录</h4><p>通过nginx可执行文件重新加载配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin  <span class="comment">#进入Nginx服务的可执行目录。</span></span><br><span class="line">./nginx -s reload  <span class="comment">#重新载入配置文件。</span></span><br></pre></td></tr></table></figure>
+<h4 id="方法2-使用系统重启命令"><a href="#方法2-使用系统重启命令" class="headerlink" title="方法2.使用系统重启命令"></a>方法2.使用系统重启命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证是否成功"><a href="#验证是否成功" class="headerlink" title="验证是否成功"></a>验证是否成功</h3><p>在浏览器输 https://你的域名 ，如图位置出现一把锁的图案便大功告成</p>
+<p><img src="/images/success.png" alt="配置成功示例图"></p>
+]]></content>
+      <categories>
+        <category>服务器配置</category>
+      </categories>
+      <tags>
+        <tag>ssl</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>xdd相关依赖安装</title>
     <url>/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h1 id="node-js-及xdd-相关依赖安装"><a href="#node-js-及xdd-相关依赖安装" class="headerlink" title="node.js 及xdd 相关依赖安装"></a>node.js 及xdd 相关依赖安装</h1><h2 id="1-下载node压缩包-同样安装在usr-local目录"><a href="#1-下载node压缩包-同样安装在usr-local目录" class="headerlink" title="1.下载node压缩包 同样安装在usr/local目录"></a>1.下载node压缩包 同样安装在usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>  &amp;&amp; wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
@@ -57,37 +88,6 @@
       </categories>
       <tags>
         <tag>xdd-plus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx服务器配置ssl</title>
-    <url>/2021/10/20/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEssl/</url>
-    <content><![CDATA[<p>这里暂只讲解nginx配置ssl过程,如何获取ssl证书请自行百度</p>
-<span id="more"></span>
-
-<h3 id="拷贝证书文件"><a href="#拷贝证书文件" class="headerlink" title="拷贝证书文件"></a>拷贝证书文件</h3><p>将获取到的两个文件(.pem和.key)拷贝到服务器上<br>建议在网站根目录新建一个名为cert的目录来存放证书文件</p>
-<h3 id="更改nginx配置文件"><a href="#更改nginx配置文件" class="headerlink" title="更改nginx配置文件"></a>更改nginx配置文件</h3><p>找到nginx配置文件nginx.conf,不同主机可能路径不一致,我的是在/etc/nginx下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
-<p>在http{ }里面添加如下内容（有的文件里有此内容，默认是注释掉的，根据需要取消注释）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       listen       443 ssl http2;</span><br><span class="line">       listen       [::]:443 ssl http2;</span><br><span class="line">       server_name  www.xxxxxx.xxx;  <span class="comment">#证书绑定的域名</span></span><br><span class="line">       root         xxxxxxxx;   <span class="comment">#网站根目录路径，根据自己的网站位置进行修改</span></span><br><span class="line"></span><br><span class="line">       ssl_certificate <span class="string">&quot;xxxxx.pem&quot;</span>;    <span class="comment">#这里替换为cert目录里的.pem文件，注意路径的使用</span></span><br><span class="line">       ssl_certificate_key <span class="string">&quot;xxxxxx.key&quot;</span>;  <span class="comment">#这里替换为cert目录里的.key文件，注意路径的使用</span></span><br><span class="line">       ssl_session_cache shared:SSL:1m;</span><br><span class="line">       ssl_session_timeout  10m;</span><br><span class="line">       ssl_ciphers HIGH:!aNULL:!MD5;    <span class="comment">#加密套件类型</span></span><br><span class="line">       ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;     <span class="comment">#TSL协议类型</span></span><br><span class="line">       <span class="comment"># Load configuration files for the default server block.</span></span><br><span class="line">       include /etc/nginx/default.d/*.conf;    <span class="comment">#这里无需修改</span></span><br><span class="line">	<span class="comment"># 以下内容为非必选项</span></span><br><span class="line">       error_page 404 /404.html;</span><br><span class="line">           location = /40x.html &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       error_page 500 502 503 504 /50x.html;</span><br><span class="line">           location = /50x.html &#123;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">#注意大括号一定要一一对应，否则可能会无法启用nginx服务</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="HTTP重定向（可选）"><a href="#HTTP重定向（可选）" class="headerlink" title="HTTP重定向（可选）"></a>HTTP重定向（可选）</h3><p>该设置可以使HTTP请求自动跳转HTTPS<br>在nginx.conf文件里找到</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen     80;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>修改server_name,同上<br>再加入如下内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rewrite ^(.*)$ https://$host<span class="variable">$1</span>; <span class="comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span></span><br></pre></td></tr></table></figure>
-<h3 id="重启nginx服务"><a href="#重启nginx服务" class="headerlink" title="重启nginx服务"></a>重启nginx服务</h3><h4 id="方法1-进入nginx的可执行目录"><a href="#方法1-进入nginx的可执行目录" class="headerlink" title="方法1.进入nginx的可执行目录"></a>方法1.进入nginx的可执行目录</h4><p>通过nginx可执行文件重新加载配置文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin  <span class="comment">#进入Nginx服务的可执行目录。</span></span><br><span class="line">./nginx -s reload  <span class="comment">#重新载入配置文件。</span></span><br></pre></td></tr></table></figure>
-<h4 id="方法2-使用系统重启命令"><a href="#方法2-使用系统重启命令" class="headerlink" title="方法2.使用系统重启命令"></a>方法2.使用系统重启命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
-
-<h3 id="验证是否成功"><a href="#验证是否成功" class="headerlink" title="验证是否成功"></a>验证是否成功</h3><p>在浏览器输 https://你的域名 ，如图位置出现一把锁的图案便大功告成</p>
-<p><img src="/images/success.png" alt="配置成功示例图"></p>
-]]></content>
-      <categories>
-        <category>服务器配置</category>
-      </categories>
-      <tags>
-        <tag>ssl</tag>
-        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -429,22 +429,78 @@
       </tags>
   </entry>
   <entry>
-    <title>软件工程基础</title>
-    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    <title>青龙面板+xdd-plus小白教程</title>
+    <url>/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="1-安装宝塔"><a href="#1-安装宝塔" class="headerlink" title="1.安装宝塔"></a>1.安装宝塔</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="2-在宝塔面板安装docker"><a href="#2-在宝塔面板安装docker" class="headerlink" title="2.在宝塔面板安装docker"></a>2.在宝塔面板安装docker</h2><h2 id="3-设置docker开机自启"><a href="#3-设置docker开机自启" class="headerlink" title="3.设置docker开机自启"></a>3.设置docker开机自启</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl status docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-拉取青龙面板"><a href="#4-拉取青龙面板" class="headerlink" title="4.拉取青龙面板"></a>4.拉取青龙面板</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull whyour/qinglong:latest</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-创建青龙容器"><a href="#5-创建青龙容器" class="headerlink" title="5.创建青龙容器"></a>5.创建青龙容器</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -dit \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/config:/ql/config \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/<span class="built_in">log</span>:/ql/<span class="built_in">log</span> \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/db:/ql/db \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/repo:/ql/repo \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/raw:/ql/raw \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/scripts:/ql/scripts \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/jbot:/ql/jbot \</span><br><span class="line">  -p 5700:5700 \</span><br><span class="line">  --name qinglong \</span><br><span class="line">  --hostname qinglong \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  whyour/qinglong:latest</span><br></pre></td></tr></table></figure>
+
+<p>ninja可选：<br>  -p 5701:5701 <br>  -v $PWD/ql/ninja:/ql/ninja \</p>
+<h2 id="6-放行端口组"><a href="#6-放行端口组" class="headerlink" title="6.放行端口组"></a>6.放行端口组</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=5700/tcp --permanent   <span class="comment">#放通5700/tcp端口</span></span><br><span class="line">firewall-cmd --reload                     <span class="comment">#重新加载防火墙 生效新规则</span></span><br></pre></td></tr></table></figure>
+
+<p>等待一会即可进去青龙面板 （浏览器地址栏 ip地址:端口号）</p>
+<h2 id="7-一步安装依赖，先进入青龙容器-名字看自己写的什么"><a href="#7-一步安装依赖，先进入青龙容器-名字看自己写的什么" class="headerlink" title="7.一步安装依赖，先进入青龙容器 名字看自己写的什么"></a>7.一步安装依赖，先进入青龙容器 名字看自己写的什么</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">`docker <span class="built_in">exec</span> -it qinglong bash <span class="comment">#qinglong为容器名根据自己容器修改`</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-在ql目录下复制进去运行即可"><a href="#8-在ql目录下复制进去运行即可" class="headerlink" title="8.在ql目录下复制进去运行即可"></a>8.在ql目录下复制进去运行即可</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">package_name=<span class="string">&quot;canvas png-js date-fns axios crypto-js ts-md5 tslib @types/node dotenv typescript fs require tslib&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$package_name</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$i</span> <span class="keyword">in</span></span><br><span class="line">        canvas)</span><br><span class="line">            <span class="built_in">cd</span> /ql/scripts</span><br><span class="line">            npm ls <span class="variable">$i</span></span><br><span class="line">            ;;</span><br><span class="line">        *)</span><br><span class="line">            npm ls <span class="variable">$i</span> -g</span><br><span class="line">            ;;</span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="安装xdd"><a href="#安装xdd" class="headerlink" title="安装xdd"></a>安装xdd</h1><h2 id="1-下载go安装包-，这里我们安装到usr-local目录"><a href="#1-下载go安装包-，这里我们安装到usr-local目录" class="headerlink" title="1.下载go安装包 ，这里我们安装到usr/local目录"></a>1.下载go安装包 ，这里我们安装到usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span> &amp;&amp; wget https://golang.google.cn/dl/go1.16.7.linux-amd64.tar.gz -O go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-解压安装包"><a href="#2-解压安装包" class="headerlink" title="2.解压安装包"></a>2.解压安装包</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvzf go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-设置环境变量"><a href="#3-设置环境变量" class="headerlink" title="3.设置环境变量"></a>3.设置环境变量</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/profile </span><br></pre></td></tr></table></figure>
+
+<p>下面代码复制到最后新起一行。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/<span class="built_in">local</span>/go/path</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile <span class="comment">##在当前bash环境下读取并执行profile中的命令。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-查看go安装是否完成"><a href="#4-查看go安装是否完成" class="headerlink" title="4.查看go安装是否完成"></a>4.查看go安装是否完成</h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env </span><br></pre></td></tr></table></figure>
+
+<p>输出一长串代表没错</p>
+<h2 id="5-安装git"><a href="#5-安装git" class="headerlink" title="5.安装git"></a>5.安装git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">rpm -ivh epel-release-latest-7.noarch.rpm</span><br><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-编译安装XDD"><a href="#6-编译安装XDD" class="headerlink" title="6.编译安装XDD"></a>6.编译安装XDD</h2><p>如果之前装过了先备份以下文件，新版解压后直接把文件拖进去<br>.xdd.db(数据文件)<br>config.yaml(配置文件)<br>session.token(QQ机器人登录凭证)<br>reply.php(机器人自定义回复配置)</p>
+<h3 id="1-plus版直接用下面命令拉库"><a href="#1-plus版直接用下面命令拉库" class="headerlink" title="1.plus版直接用下面命令拉库"></a>1.plus版直接用下面命令拉库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/764763903a/xdd-plus.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-编译xdd"><a href="#2-编译xdd" class="headerlink" title="2.编译xdd"></a>2.编译xdd</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xdd-plus &amp;&amp; go build  </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-赋予权限并运行"><a href="#3-赋予权限并运行" class="headerlink" title="3.赋予权限并运行"></a>3.赋予权限并运行</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chmod 777 xdd</span><br><span class="line">./xdd</span><br></pre></td></tr></table></figure>
+
+<p>让它跑一会 然后退出 退出命令是 Ctrl ＋ C</p>
+<h3 id="4-更改配置文件"><a href="#4-更改配置文件" class="headerlink" title="4.更改配置文件"></a>4.更改配置文件</h3><p>魔改版打开/root/xdd/conf/config.yaml<br>plus版打开/root/xdd-plus/conf/config.yaml<br>这个很重要请认真配置<br>样例文件如下: 所有前面#开头的都是注释掉的，如果要使用请自行删除 ，中文注释就不用删了 删了就出错了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mode: parallel</span><br><span class="line">containers:</span><br><span class="line"></span><br><span class="line">  - address: http://ip:青龙端口</span><br><span class="line">    username: 青龙账号</span><br><span class="line">    password: 青龙密码</span><br><span class="line">    cid: 青龙创建应用可见</span><br><span class="line">    secret: 青龙创建应用可见</span><br><span class="line">    weigth: </span><br><span class="line">    mode: parallel</span><br><span class="line">    <span class="built_in">limit</span>: 9999</span><br><span class="line">    theme: /root/xdd-plus/theme/admin.html <span class="comment">#plus用admin.html自定义主题，支持本地、网络路径</span></span><br><span class="line">    static: ./static <span class="comment">#静态文件 便于自定义二维码页面时，引入css、js等文件</span></span><br><span class="line">    master: <span class="comment">#xdd后台密码</span></span><br><span class="line">    database: </span><br><span class="line">    qywx_key:  <span class="comment">#企业微信推送key</span></span><br><span class="line">    daily_push: <span class="comment">#定时任务</span></span><br><span class="line">    resident: jd_xxxxx <span class="comment">#均衡模式下所有容器共同的账号pin，有多个用&#x27;&amp;&#x27;拼接。不建议填写，后续实现指定账号助力功能。</span></span><br><span class="line">    <span class="comment">#自定义ua</span></span><br><span class="line">    user_agent:</span><br><span class="line">    telegram_bot_token: </span><br><span class="line">    telegram_user_id: </span><br><span class="line">    qquid:  <span class="comment">#接收通知的qq号，管理员QQ号码</span></span><br><span class="line">    qqgid:  <span class="comment">#监听的群</span></span><br><span class="line">    default_priority: 1<span class="comment">#新用户默认优先级</span></span><br><span class="line">    no_ghproxy: <span class="literal">false</span> <span class="comment">#更新资源是否不使用代理 默认false</span></span><br><span class="line">    qbot_public_mode: <span class="literal">true</span>  <span class="comment">#qq机器人群聊模式，默认私聊模式</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>找到/root/xdd-plus/.git/config文件<br>在文件最后一行加上两行代码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[user]</span><br><span class="line">       email = xxx@qq.com <span class="comment">#自己的邮箱或者随意</span></span><br><span class="line">       name = 爱的味道 <span class="comment">#随意昵称</span></span><br></pre></td></tr></table></figure>
+
+<p>改好保存</p>
+<h3 id="5-再次运行-然后绑定QQ机器人🤖"><a href="#5-再次运行-然后绑定QQ机器人🤖" class="headerlink" title="5.再次运行 然后绑定QQ机器人🤖"></a>5.再次运行 然后绑定QQ机器人🤖</h3><p>cd xdd-plus &amp;&amp; ./xdd</p>
+<h3 id="6-挂机静默运行"><a href="#6-挂机静默运行" class="headerlink" title="6.挂机静默运行"></a>6.挂机静默运行</h3><p>nohup ./xdd 1&gt;/dev/null 2&gt;&amp;1 &amp; #AMD64<br>或者./xdd -d</p>
+<p>后台地址<a href="http://ip:8080/">http://IP:8080</a> 自己改过端口号的 <a href="http://IP:端口号">http://IP:端口号</a></p>
+<p>xdd装完了接下来装其依赖环境<br><a href="http://train2000.top/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/">xdd相关依赖安装 | 筱林同学的blog</a></p>
+]]></content>
+      <categories>
+        <category>青龙面板</category>
+      </categories>
       <tags>
-        <tag>软件工程</tag>
+        <tag>xdd-plus</tag>
+        <tag>青龙</tag>
       </tags>
   </entry>
   <entry>
@@ -585,78 +641,22 @@ S = 500 / 203
       </tags>
   </entry>
   <entry>
-    <title>青龙面板+xdd-plus小白教程</title>
-    <url>/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="1-安装宝塔"><a href="#1-安装宝塔" class="headerlink" title="1.安装宝塔"></a>1.安装宝塔</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="2-在宝塔面板安装docker"><a href="#2-在宝塔面板安装docker" class="headerlink" title="2.在宝塔面板安装docker"></a>2.在宝塔面板安装docker</h2><h2 id="3-设置docker开机自启"><a href="#3-设置docker开机自启" class="headerlink" title="3.设置docker开机自启"></a>3.设置docker开机自启</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl status docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-拉取青龙面板"><a href="#4-拉取青龙面板" class="headerlink" title="4.拉取青龙面板"></a>4.拉取青龙面板</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull whyour/qinglong:latest</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-创建青龙容器"><a href="#5-创建青龙容器" class="headerlink" title="5.创建青龙容器"></a>5.创建青龙容器</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -dit \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/config:/ql/config \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/<span class="built_in">log</span>:/ql/<span class="built_in">log</span> \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/db:/ql/db \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/repo:/ql/repo \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/raw:/ql/raw \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/scripts:/ql/scripts \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql/jbot:/ql/jbot \</span><br><span class="line">  -p 5700:5700 \</span><br><span class="line">  --name qinglong \</span><br><span class="line">  --hostname qinglong \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  whyour/qinglong:latest</span><br></pre></td></tr></table></figure>
-
-<p>ninja可选：<br>  -p 5701:5701 <br>  -v $PWD/ql/ninja:/ql/ninja \</p>
-<h2 id="6-放行端口组"><a href="#6-放行端口组" class="headerlink" title="6.放行端口组"></a>6.放行端口组</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=5700/tcp --permanent   <span class="comment">#放通5700/tcp端口</span></span><br><span class="line">firewall-cmd --reload                     <span class="comment">#重新加载防火墙 生效新规则</span></span><br></pre></td></tr></table></figure>
-
-<p>等待一会即可进去青龙面板 （浏览器地址栏 ip地址:端口号）</p>
-<h2 id="7-一步安装依赖，先进入青龙容器-名字看自己写的什么"><a href="#7-一步安装依赖，先进入青龙容器-名字看自己写的什么" class="headerlink" title="7.一步安装依赖，先进入青龙容器 名字看自己写的什么"></a>7.一步安装依赖，先进入青龙容器 名字看自己写的什么</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">`docker <span class="built_in">exec</span> -it qinglong bash <span class="comment">#qinglong为容器名根据自己容器修改`</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="8-在ql目录下复制进去运行即可"><a href="#8-在ql目录下复制进去运行即可" class="headerlink" title="8.在ql目录下复制进去运行即可"></a>8.在ql目录下复制进去运行即可</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">package_name=<span class="string">&quot;canvas png-js date-fns axios crypto-js ts-md5 tslib @types/node dotenv typescript fs require tslib&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$package_name</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$i</span> <span class="keyword">in</span></span><br><span class="line">        canvas)</span><br><span class="line">            <span class="built_in">cd</span> /ql/scripts</span><br><span class="line">            npm ls <span class="variable">$i</span></span><br><span class="line">            ;;</span><br><span class="line">        *)</span><br><span class="line">            npm ls <span class="variable">$i</span> -g</span><br><span class="line">            ;;</span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-<h1 id="安装xdd"><a href="#安装xdd" class="headerlink" title="安装xdd"></a>安装xdd</h1><h2 id="1-下载go安装包-，这里我们安装到usr-local目录"><a href="#1-下载go安装包-，这里我们安装到usr-local目录" class="headerlink" title="1.下载go安装包 ，这里我们安装到usr/local目录"></a>1.下载go安装包 ，这里我们安装到usr/local目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span> &amp;&amp; wget https://golang.google.cn/dl/go1.16.7.linux-amd64.tar.gz -O go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-解压安装包"><a href="#2-解压安装包" class="headerlink" title="2.解压安装包"></a>2.解压安装包</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvzf go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-设置环境变量"><a href="#3-设置环境变量" class="headerlink" title="3.设置环境变量"></a>3.设置环境变量</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/profile </span><br></pre></td></tr></table></figure>
-
-<p>下面代码复制到最后新起一行。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/<span class="built_in">local</span>/go/path</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile <span class="comment">##在当前bash环境下读取并执行profile中的命令。</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-查看go安装是否完成"><a href="#4-查看go安装是否完成" class="headerlink" title="4.查看go安装是否完成"></a>4.查看go安装是否完成</h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env </span><br></pre></td></tr></table></figure>
-
-<p>输出一长串代表没错</p>
-<h2 id="5-安装git"><a href="#5-安装git" class="headerlink" title="5.安装git"></a>5.安装git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">rpm -ivh epel-release-latest-7.noarch.rpm</span><br><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-编译安装XDD"><a href="#6-编译安装XDD" class="headerlink" title="6.编译安装XDD"></a>6.编译安装XDD</h2><p>如果之前装过了先备份以下文件，新版解压后直接把文件拖进去<br>.xdd.db(数据文件)<br>config.yaml(配置文件)<br>session.token(QQ机器人登录凭证)<br>reply.php(机器人自定义回复配置)</p>
-<h3 id="1-plus版直接用下面命令拉库"><a href="#1-plus版直接用下面命令拉库" class="headerlink" title="1.plus版直接用下面命令拉库"></a>1.plus版直接用下面命令拉库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/764763903a/xdd-plus.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-编译xdd"><a href="#2-编译xdd" class="headerlink" title="2.编译xdd"></a>2.编译xdd</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xdd-plus &amp;&amp; go build  </span><br></pre></td></tr></table></figure>
-
-<h3 id="3-赋予权限并运行"><a href="#3-赋予权限并运行" class="headerlink" title="3.赋予权限并运行"></a>3.赋予权限并运行</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chmod 777 xdd</span><br><span class="line">./xdd</span><br></pre></td></tr></table></figure>
-
-<p>让它跑一会 然后退出 退出命令是 Ctrl ＋ C</p>
-<h3 id="4-更改配置文件"><a href="#4-更改配置文件" class="headerlink" title="4.更改配置文件"></a>4.更改配置文件</h3><p>魔改版打开/root/xdd/conf/config.yaml<br>plus版打开/root/xdd-plus/conf/config.yaml<br>这个很重要请认真配置<br>样例文件如下: 所有前面#开头的都是注释掉的，如果要使用请自行删除 ，中文注释就不用删了 删了就出错了</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mode: parallel</span><br><span class="line">containers:</span><br><span class="line"></span><br><span class="line">  - address: http://ip:青龙端口</span><br><span class="line">    username: 青龙账号</span><br><span class="line">    password: 青龙密码</span><br><span class="line">    cid: 青龙创建应用可见</span><br><span class="line">    secret: 青龙创建应用可见</span><br><span class="line">    weigth: </span><br><span class="line">    mode: parallel</span><br><span class="line">    <span class="built_in">limit</span>: 9999</span><br><span class="line">    theme: /root/xdd-plus/theme/admin.html <span class="comment">#plus用admin.html自定义主题，支持本地、网络路径</span></span><br><span class="line">    static: ./static <span class="comment">#静态文件 便于自定义二维码页面时，引入css、js等文件</span></span><br><span class="line">    master: <span class="comment">#xdd后台密码</span></span><br><span class="line">    database: </span><br><span class="line">    qywx_key:  <span class="comment">#企业微信推送key</span></span><br><span class="line">    daily_push: <span class="comment">#定时任务</span></span><br><span class="line">    resident: jd_xxxxx <span class="comment">#均衡模式下所有容器共同的账号pin，有多个用&#x27;&amp;&#x27;拼接。不建议填写，后续实现指定账号助力功能。</span></span><br><span class="line">    <span class="comment">#自定义ua</span></span><br><span class="line">    user_agent:</span><br><span class="line">    telegram_bot_token: </span><br><span class="line">    telegram_user_id: </span><br><span class="line">    qquid:  <span class="comment">#接收通知的qq号，管理员QQ号码</span></span><br><span class="line">    qqgid:  <span class="comment">#监听的群</span></span><br><span class="line">    default_priority: 1<span class="comment">#新用户默认优先级</span></span><br><span class="line">    no_ghproxy: <span class="literal">false</span> <span class="comment">#更新资源是否不使用代理 默认false</span></span><br><span class="line">    qbot_public_mode: <span class="literal">true</span>  <span class="comment">#qq机器人群聊模式，默认私聊模式</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>找到/root/xdd-plus/.git/config文件<br>在文件最后一行加上两行代码</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[user]</span><br><span class="line">       email = xxx@qq.com <span class="comment">#自己的邮箱或者随意</span></span><br><span class="line">       name = 爱的味道 <span class="comment">#随意昵称</span></span><br></pre></td></tr></table></figure>
-
-<p>改好保存</p>
-<h3 id="5-再次运行-然后绑定QQ机器人🤖"><a href="#5-再次运行-然后绑定QQ机器人🤖" class="headerlink" title="5.再次运行 然后绑定QQ机器人🤖"></a>5.再次运行 然后绑定QQ机器人🤖</h3><p>cd xdd-plus &amp;&amp; ./xdd</p>
-<h3 id="6-挂机静默运行"><a href="#6-挂机静默运行" class="headerlink" title="6.挂机静默运行"></a>6.挂机静默运行</h3><p>nohup ./xdd 1&gt;/dev/null 2&gt;&amp;1 &amp; #AMD64<br>或者./xdd -d</p>
-<p>后台地址<a href="http://ip:8080/">http://IP:8080</a> 自己改过端口号的 <a href="http://IP:端口号">http://IP:端口号</a></p>
-<p>xdd装完了接下来装其依赖环境<br><a href="http://train2000.top/2021/10/17/xdd%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85/">xdd相关依赖安装 | 筱林同学的blog</a></p>
-]]></content>
-      <categories>
-        <category>青龙面板</category>
-      </categories>
+    <title>软件工程基础</title>
+    <url>/2021/10/23/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码不对噢" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e8fc9bdbc19ebde0a8ec4aa8b640f409ad8e5b99492e9d4fef20497ef2650309">4630436162ade97ba2718b7d0c4b3b630d823d9e4a4943f517d1b4bc6820f21a078badd6c94d1a5c9e613acd6235da05</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码并回车</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
       <tags>
-        <tag>xdd-plus</tag>
-        <tag>青龙</tag>
+        <tag>软件工程</tag>
       </tags>
   </entry>
 </search>
