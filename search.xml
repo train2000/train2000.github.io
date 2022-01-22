@@ -91,66 +91,6 @@
       </tags>
   </entry>
   <entry>
-    <title>傻妞机器人sillyGirl安装部署</title>
-    <url>/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<p>以下内容版本截至11月9日可用，后续若有更改会定期进行更新，懒人请直接进入首页左侧导航栏“狗东京豆”上车。机器人需配合青龙面板使用，若还未搭建青龙面板请先移步<a href="https://train2000.top/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/">青龙面板+xdd-plus小白教程</a>  查看相关内容</p>
-<span id="more"></span>
-
-<h4 id="安装go环境"><a href="#安装go环境" class="headerlink" title="安装go环境"></a>安装go环境</h4><h5 id="下载go安装包"><a href="#下载go安装包" class="headerlink" title="下载go安装包"></a>下载go安装包</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span> &amp;&amp; wget https://golang.google.cn/dl/go1.16.7.linux-amd64.tar.gz -O go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="解压安装包"><a href="#解压安装包" class="headerlink" title="解压安装包"></a>解压安装包</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvzf go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h5 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
-<p>复制下面内容到文件最后面（进入文件按shift+g直接跳到最后一行，然后按o在下一行输入）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/<span class="built_in">local</span>/go/path</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure>
-<p>编辑完后先按esc，再按shift+g，输入wq，保存并退出。<br><strong>注：用宝塔面板的直接找到文件打开粘贴到最后面即可。</strong></p>
-<p>记得使用source命令使环境变量生效</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
-<p>最后查看go是否完成安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env</span><br></pre></td></tr></table></figure>
-<p><img src="/images/go_sucess.jpg"></p>
-<h4 id="安装傻妞"><a href="#安装傻妞" class="headerlink" title="安装傻妞"></a>安装傻妞</h4><h5 id="拉取机器人库"><a href="#拉取机器人库" class="headerlink" title="拉取机器人库"></a>拉取机器人库</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/cdle/sillyGirl</span><br></pre></td></tr></table></figure>
-<h5 id="拉取京东组件库"><a href="#拉取京东组件库" class="headerlink" title="拉取京东组件库"></a>拉取京东组件库</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> sillyGirl/develop &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/ufuckee/jd_cookie</span><br></pre></td></tr></table></figure>
-
-<h5 id="新建dev-go文件"><a href="#新建dev-go文件" class="headerlink" title="新建dev.go文件"></a>新建dev.go文件</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/sillyGirl &amp;&amp; vi dev.go</span><br></pre></td></tr></table></figure>
-<p>把以下内容放进去</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"></span><br><span class="line"><span class="comment">//青龙2.9机器人</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/develop/qinglong&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//京东账号</span></span><br><span class="line">_ <span class="string">&quot;github.com/cdle/sillyGirl/develop/jd_cookie&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//腾讯QQ</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/qq&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Te Legram</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/tg&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//微信公众号</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/wxmp&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//微信号</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/wx&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>记得wq保存退出</p>
-<h5 id="编译并启动机器人"><a href="#编译并启动机器人" class="headerlink" title="编译并启动机器人"></a>编译并启动机器人</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go build</span><br><span class="line">chmod 777 sillyGirl    </span><br><span class="line">./sillyGirl       </span><br></pre></td></tr></table></figure>
-
-<p>等待弹出二维码，记得用需要做机器人的qq扫描，登录成功后开始配置傻妞。</p>
-<h4 id="配置傻妞"><a href="#配置傻妞" class="headerlink" title="配置傻妞"></a>配置傻妞</h4><p>扫码完成登录后，先不要退出，接下来对傻妞进行配置：</p>
-<p>用qq机器人给机器人自己发送以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">设置管理员账号</span><br><span class="line">set qq masters 用于管理的QQ号（不是机器人的qq）</span><br><span class="line"></span><br><span class="line">禁用机器人自己回复信息</span><br><span class="line">set qq onself false</span><br></pre></td></tr></table></figure>
-<p>接下来就可以用管理员qq开始配置了</p>
-<p><strong>必需配置：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">设置青龙openapi的client_id参数</span><br><span class="line">set qinglong client_id ?</span><br><span class="line"></span><br><span class="line">设置青龙openapi的client_secret参数</span><br><span class="line">set qinglong client_secret ?</span><br><span class="line"></span><br><span class="line">设置青龙面板地址</span><br><span class="line">set qinglong host http://青龙IP地址:青龙端口号</span><br></pre></td></tr></table></figure>
-
-<p><strong>可选配置：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">傻妞机器人名</span><br><span class="line">set sillyGirl name 傻妞</span><br><span class="line"></span><br><span class="line">傻妞http服务端口</span><br><span class="line">set sillyGirl port 8080</span><br><span class="line"></span><br><span class="line">傻妞消息撤回等待时间，单位秒</span><br><span class="line">set sillyGirl duration 5</span><br><span class="line"></span><br><span class="line">傻妞自动升级是否通知</span><br><span class="line">set sillyGirl update_notify false</span><br><span class="line"></span><br><span class="line">是否开启傻妞自动更新</span><br><span class="line">set sillyGirl auto_update true</span><br><span class="line"></span><br><span class="line">青龙是否开启自动隐藏重复任务功能</span><br><span class="line">set qinglong autoCronHideDuplicate true</span><br><span class="line"></span><br><span class="line">设置是否自动同意好友请求</span><br><span class="line">set qq auto_friend false</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>配置完后记得重启傻妞</p>
-<h5 id="重启傻妞"><a href="#重启傻妞" class="headerlink" title="重启傻妞"></a>重启傻妞</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -A|grep sillyGirl <span class="comment">##显示进程号</span></span><br><span class="line"><span class="built_in">kill</span> -9 xxxxxx <span class="comment">##杀掉进程</span></span><br><span class="line"><span class="built_in">cd</span> ~/sillyGirl &amp;&amp; ./sillyGirl  <span class="comment">##启动傻妞</span></span><br></pre></td></tr></table></figure>
-<p>等待加载数据库完成，出现以下内容表示机器人配置成功<br><img src="/images/silly_ok.jpg"></p>
-<p>按ctrl+c退出，输入以下内容让傻妞静默挂机</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./sillyGirl -d</span><br></pre></td></tr></table></figure>
-
-
-
-<p>傻妞配置相关内容结束</p>
-]]></content>
-      <categories>
-        <category>青龙面板</category>
-      </categories>
-      <tags>
-        <tag>傻妞机器人</tag>
-        <tag>sillyGirl</tag>
-        <tag>青龙</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据结构</title>
     <url>/2021/11/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<h2 id="引论"><a href="#引论" class="headerlink" title="引论"></a>引论</h2><p>程序=数据结构+算法</p>
@@ -426,6 +366,66 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>傻妞机器人sillyGirl安装部署</title>
+    <url>/2021/11/09/%E5%82%BB%E5%A6%9E%E6%9C%BA%E5%99%A8%E4%BA%BAsillyGirl%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p>以下内容版本截至11月9日可用，后续若有更改会定期进行更新，懒人请直接进入首页左侧导航栏“狗东京豆”上车。机器人需配合青龙面板使用，若还未搭建青龙面板请先移步<a href="https://train2000.top/2021/10/16/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF-xdd-plus%E5%B0%8F%E7%99%BD%E6%95%99%E7%A8%8B/">青龙面板+xdd-plus小白教程</a>  查看相关内容</p>
+<span id="more"></span>
+
+<h4 id="安装go环境"><a href="#安装go环境" class="headerlink" title="安装go环境"></a>安装go环境</h4><h5 id="下载go安装包"><a href="#下载go安装包" class="headerlink" title="下载go安装包"></a>下载go安装包</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span> &amp;&amp; wget https://golang.google.cn/dl/go1.16.7.linux-amd64.tar.gz -O go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="解压安装包"><a href="#解压安装包" class="headerlink" title="解压安装包"></a>解压安装包</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvzf go1.16.7.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h5 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>复制下面内容到文件最后面（进入文件按shift+g直接跳到最后一行，然后按o在下一行输入）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/<span class="built_in">local</span>/go/path</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure>
+<p>编辑完后先按esc，再按shift+g，输入wq，保存并退出。<br><strong>注：用宝塔面板的直接找到文件打开粘贴到最后面即可。</strong></p>
+<p>记得使用source命令使环境变量生效</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<p>最后查看go是否完成安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env</span><br></pre></td></tr></table></figure>
+<p><img src="/images/go_sucess.jpg"></p>
+<h4 id="安装傻妞"><a href="#安装傻妞" class="headerlink" title="安装傻妞"></a>安装傻妞</h4><h5 id="拉取机器人库"><a href="#拉取机器人库" class="headerlink" title="拉取机器人库"></a>拉取机器人库</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/cdle/sillyGirl</span><br></pre></td></tr></table></figure>
+<h5 id="拉取京东组件库"><a href="#拉取京东组件库" class="headerlink" title="拉取京东组件库"></a>拉取京东组件库</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> sillyGirl/develop &amp;&amp; git <span class="built_in">clone</span> https://ghproxy.com/https://github.com/ufuckee/jd_cookie</span><br></pre></td></tr></table></figure>
+
+<h5 id="新建dev-go文件"><a href="#新建dev-go文件" class="headerlink" title="新建dev.go文件"></a>新建dev.go文件</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/sillyGirl &amp;&amp; vi dev.go</span><br></pre></td></tr></table></figure>
+<p>把以下内容放进去</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"></span><br><span class="line"><span class="comment">//青龙2.9机器人</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/develop/qinglong&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//京东账号</span></span><br><span class="line">_ <span class="string">&quot;github.com/cdle/sillyGirl/develop/jd_cookie&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//腾讯QQ</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/qq&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Te Legram</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/tg&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//微信公众号</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/wxmp&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//微信号</span></span><br><span class="line">_<span class="string">&quot;github.com/cdle/sillyGirl/im/wx&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>记得wq保存退出</p>
+<h5 id="编译并启动机器人"><a href="#编译并启动机器人" class="headerlink" title="编译并启动机器人"></a>编译并启动机器人</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go build</span><br><span class="line">chmod 777 sillyGirl    </span><br><span class="line">./sillyGirl       </span><br></pre></td></tr></table></figure>
+
+<p>等待弹出二维码，记得用需要做机器人的qq扫描，登录成功后开始配置傻妞。</p>
+<h4 id="配置傻妞"><a href="#配置傻妞" class="headerlink" title="配置傻妞"></a>配置傻妞</h4><p>扫码完成登录后，先不要退出，接下来对傻妞进行配置：</p>
+<p>用qq机器人给机器人自己发送以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">设置管理员账号</span><br><span class="line">set qq masters 用于管理的QQ号（不是机器人的qq）</span><br><span class="line"></span><br><span class="line">禁用机器人自己回复信息</span><br><span class="line">set qq onself false</span><br></pre></td></tr></table></figure>
+<p>接下来就可以用管理员qq开始配置了</p>
+<p><strong>必需配置：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">设置青龙openapi的client_id参数</span><br><span class="line">set qinglong client_id ?</span><br><span class="line"></span><br><span class="line">设置青龙openapi的client_secret参数</span><br><span class="line">set qinglong client_secret ?</span><br><span class="line"></span><br><span class="line">设置青龙面板地址</span><br><span class="line">set qinglong host http://青龙IP地址:青龙端口号</span><br></pre></td></tr></table></figure>
+
+<p><strong>可选配置：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">傻妞机器人名</span><br><span class="line">set sillyGirl name 傻妞</span><br><span class="line"></span><br><span class="line">傻妞http服务端口</span><br><span class="line">set sillyGirl port 8080</span><br><span class="line"></span><br><span class="line">傻妞消息撤回等待时间，单位秒</span><br><span class="line">set sillyGirl duration 5</span><br><span class="line"></span><br><span class="line">傻妞自动升级是否通知</span><br><span class="line">set sillyGirl update_notify false</span><br><span class="line"></span><br><span class="line">是否开启傻妞自动更新</span><br><span class="line">set sillyGirl auto_update true</span><br><span class="line"></span><br><span class="line">青龙是否开启自动隐藏重复任务功能</span><br><span class="line">set qinglong autoCronHideDuplicate true</span><br><span class="line"></span><br><span class="line">设置是否自动同意好友请求</span><br><span class="line">set qq auto_friend false</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>配置完后记得重启傻妞</p>
+<h5 id="重启傻妞"><a href="#重启傻妞" class="headerlink" title="重启傻妞"></a>重启傻妞</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -A|grep sillyGirl <span class="comment">##显示进程号</span></span><br><span class="line"><span class="built_in">kill</span> -9 xxxxxx <span class="comment">##杀掉进程</span></span><br><span class="line"><span class="built_in">cd</span> ~/sillyGirl &amp;&amp; ./sillyGirl  <span class="comment">##启动傻妞</span></span><br></pre></td></tr></table></figure>
+<p>等待加载数据库完成，出现以下内容表示机器人配置成功<br><img src="/images/silly_ok.jpg"></p>
+<p>按ctrl+c退出，输入以下内容让傻妞静默挂机</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./sillyGirl -d</span><br></pre></td></tr></table></figure>
+
+
+
+<p>傻妞配置相关内容结束</p>
+]]></content>
+      <categories>
+        <category>青龙面板</category>
+      </categories>
+      <tags>
+        <tag>傻妞机器人</tag>
+        <tag>sillyGirl</tag>
+        <tag>青龙</tag>
       </tags>
   </entry>
   <entry>
